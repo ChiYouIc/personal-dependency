@@ -1,6 +1,0 @@
-cn\cy\redis\config\RedisConfig.class
-cn\cy\redis\properties\RedisProperties.class
-cn\cy\redis\service\IRedisService.class
-cn\cy\redis\service\impl\IRedisKeysServiceImpl.class
-cn\cy\redis\service\impl\IRedisServiceImpl.class
-cn\cy\redis\service\IRedisKeysService.class
