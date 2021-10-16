@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cy.security.web.mapper.UserInfoMapper">
+
+    <resultMap id="userInfoResult" type="LoginUser">
+        <id property="id" column="ID"/>
+        <result property="username" column="USER_NAME"/>
+        <result property="nickName" column="NICK_NAME"/>
+        <result property="phone" column="PHONE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="avatar" column="AVATAR"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="status" column="STATUS"/>
+        <result property="loginIp" column="LOGIN_IP"/>
+        <result property="loginDate" column="LOGIN_TIME"/>
+        <collection property="roles" javaType="ArrayList" ofType="Role">
+            <id property="id" column="ROLE_ID"/>
+            <result property="roleName" column="ROLE_NAME"/>
+        </collection>
+        <collection property="permissions" javaType="ArrayList" ofType="Permission">
+            <id property="id" column="PERMISSION_ID"/>
+            <result property="permissionName" column="PERMISSION_NAME"/>
+        </collection>
+    </resultMap>
+
+    <sql id="ConsumerInfoSql">
+        select c.ID,
+               c.USER_NAME,
+               c.SEX,
+               c.NICK_NAME,
+               c.AVATAR,
+               c.PHONE,
+               c.EMAIL,
+               c.PASSWORD,
+               c.STATUS,
+               c.LOGIN_IP,
+               c.LOGIN_TIME,
+               c.REMARK,
+               r.ID as ROLE_ID,
+               r.ROLE_NAME,
+               p.ID as PERMISSION_ID,
+               p.PERMISSION_NAME
+        from pw_consumer c
+                 left join pw_auth_user_role ur on ur.USER_ID = c.ID
+                 left join pw_role r on r.ID = ur.ROLE_ID and r.STATUS = 1
+                 left join pw_auth_role_permi rp on rp.ROLE_ID = ur.ROLE_ID
+                 left join pw_permission p on p.ID = rp.PERMI_ID and p.STATUS = 1
+        where c.STATUS = 1
+    </sql>
+
+    <select id="selectLoginUserInfoByUsername" parameterType="java.lang.String" resultMap="userInfoResult">
+        <include refid="ConsumerInfoSql"/>
+        and c.USER_NAME = #{username}
+    </select>
+
+    <!-- 更新用户信息 -->
+    <update id="updateUserLoginInfo" parameterType="LoginUser">
+        update pw_consumer
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null">ID = #{id},</if>
+            <if test="username != null and username != ''">USER_NAME = #{username},</if>
+            <if test="sex != null and sex != ''">SEX = #{sex},</if>
+            <if test="nickName != null and nickName != ''">NICK_NAME = #{nickName},</if>
+            <if test="avatar != null and avatar != ''">ID = #{email},</if>
+            <if test="phone != null and phone != ''">PHONE = #{phone},</if>
+            <if test="email != null and email != ''">EMAIL = #{email},</if>
+            <if test="status != null">STATUS = #{status},</if>
+            <if test="loginIp != null and loginIp != ''">LOGIN_IP = #{loginIp},</if>
+            <if test="loginDate != null">LOGIN_TIME = #{loginDate},</if>
+            <if test="remark != null and remark != ''">REMARK = #{loginIp},</if>
+        </trim>
+    </update>
+
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cy.security.web.mapper.LoginInfoMapper">
+
+    <select id="selectLoginInfoList" parameterType="LoginInfo" resultType="LoginInfo">
+
+    </select>
+
+    <insert id="insertLoginInfo" parameterType="LoginInfo" useGeneratedKeys="true" keyColumn="infoId">
+        insert into pw_login_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">ID,</if>
+            <if test="account != null and account != ''">ACCOUNT,</if>
+            <if test="username != null and username != ''">USER_NAME,</if>
+            <if test="ipaddr != null and ipaddr != ''">IP_ADDR,</if>
+            <if test="loginLocation != null and loginLocation != ''">LOGIN_LOCATION,</if>
+            <if test="browser != null and browser != ''">BROWSER,</if>
+            <if test="os != null and os != ''">OS,</if>
+            <if test="status != null">STATUS,</if>
+            <if test="msg != null and msg != ''">MESSAGE,</if>
+            <if test="loginTime != null">LOGIN_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">#{id},</if>
+            <if test="account != null and account != ''">#{account},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="ipaddr != null and ipaddr != ''">#{ipaddr},</if>
+            <if test="loginLocation != null and loginLocation != ''">#{loginLocation},</if>
+            <if test="browser != null and browser != ''">#{browser},</if>
+            <if test="os != null and os != ''">#{os},</if>
+            <if test="status != null">#{status},</if>
+            <if test="msg != null and msg != ''">#{msg},</if>
+            <if test="loginTime != null">#{loginTime},</if>
+        </trim>
+    </insert>
+
+    <update id="cleanLoginInfo">
+        update pw_login_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null">ID = #{id},</if>
+            <if test="account != null and account != ''">ACCOUNT = #{account},</if>
+            <if test="username != null and username != ''">USER_NAME = #{username},</if>
+            <if test="ipaddr != null and ipaddr != ''">IP_ADDR = #{ipaddr},</if>
+            <if test="loginLocation != null and loginLocation != ''">LOGIN_LOCATION = #{loginLocation},</if>
+            <if test="browser != null and browser != ''">BROWSER = #{browser},</if>
+            <if test="os != null and os != ''">OS = #{os},</if>
+            <if test="status != null">STATUS = #{status},</if>
+            <if test="msg != null and msg != ''">MESSAGE = #{msg},</if>
+            <if test="loginTime != null">LOGIN_TIME = #{loginTime},</if>
+        </trim>
+    </update>
+
+    <delete id="deleteLoginInfoByIds">
+        delete from pw_login_info where ID in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

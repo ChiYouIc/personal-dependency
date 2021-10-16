@@ -1,0 +1,3 @@
+cn\cy\limit\config\AccessLimitAutoConfig.class
+cn\cy\limit\interceptor\AccessLimitInterceptor.class
+cn\cy\limit\annotation\AccessLimit.class

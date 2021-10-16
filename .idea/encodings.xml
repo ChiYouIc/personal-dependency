@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/personal-start-accessLimit/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-accessLimit/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-framework/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-log/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-log/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-mybatis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-mybatis/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-redis/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-security/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-sync/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-sync/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-test/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-start-web/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

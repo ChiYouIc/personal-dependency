@@ -1,0 +1,77 @@
+server:
+  port: 8085
+  servlet:
+    # 应用访问路径
+    context-path: /website
+  tomcat:
+    # url 编码默认使用 UTF-8
+    uri-encoding: UTF-8
+    threads:
+      # 最大线程数，默认 200
+      max: 200
+      # 默认启动线程数，默认 10
+      min-spare: 10
+
+
+spring:
+  application:
+    name: personal-website
+  profiles:
+    active: dev
+    include: utils
+  servlet:
+    multipart:
+      # 开启文件上传
+      enabled: true
+      # 文件上传大小，默认 1MB
+      max-file-size: 1MB
+      # 请求数据大小，默认 10MB
+      max-request-size: 10MB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri:
+
+# mybatis 配置
+mybatis:
+  # mybatis 接口映射 xml 文件路径
+  mapper-locations: classpath*:/**/*Mapper.xml
+  # 搜索指定包别名
+  type-aliases-package: cn.cy.**.model,cn.cy.website.**.dto,cn.cy.website.**.bo
+  # mybatis全局配置文件路径
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+# PageHelper 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# redis 配置
+redis:
+  database: pw
+  admin: 'pw:admin'
+  resourceList: 'takeout:resourceList'
+  # 24 小时
+  common: 86400
+
+# jwt 配置
+jwt:
+  #J WT 存储的请求头
+  tokenHeader: Authorization
+  # JWT 加解密使用的密钥
+  secret: pw-admin-secret
+  # JWT 的超期限时间（60 * 60 * 24 * 7）
+  expiration: 604800
+  # JWT 负载中拿到开头
+  tokenHead: 'Bearer '
+  # JWT 刷新时间间隔（60 * 30）
+  tokenRefreshInterval: 1800
+
+logging:
+  level:
+    #   配置打印sql到控制台
+    root: info
+    cn.cy: debug

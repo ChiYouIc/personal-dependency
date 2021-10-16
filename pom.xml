@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.cy</groupId>
+    <artifactId>personal-dependency</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>personal-start-dependencies</module>
+        <module>personal-start-accessLimit</module>
+        <module>personal-start-common</module>
+        <module>personal-start-framework</module>
+        <module>personal-start-log</module>
+        <module>personal-start-mybatis</module>
+        <module>personal-start-redis</module>
+        <module>personal-start-sync</module>
+        <module>personal-start-web</module>
+        <module>personal-start-test</module>
+        <module>personal-start-security</module>
+    </modules>
+
+</project>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <name>Personal Website System Start</name>
+    <description>系统启动模块</description>
+    <artifactId>personal-start-test</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>cn.cy</groupId>
+        <artifactId>personal-start-dependencies</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <utf8>UTF-8</utf8>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-web</artifactId>
+        </dependency>
+
+        <!-- 测试依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-redis</artifactId>
+        </dependency>
+
+        <!-- 热部署 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+    </dependencies>
+
+    <!--分别设置开发，测试，生产环境-->
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <!-- 环境标识 -->
+            <id>dev</id>
+            <activation>
+                <!--默认环境-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>dev</environment>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <exclude.files/>
+            </properties>
+            <dependencies>
+                <!-- spring-boot-devtools -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <optional>true</optional>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-test</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!-- 功能验收测试环境 -->
+        <profile>
+            <id>fat</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>fat</environment>
+                <spring.profiles.active>fat</spring.profiles.active>
+                <exclude.files/>
+            </properties>
+        </profile>
+        <!-- 用户验收测试环境 -->
+        <profile>
+            <id>uat</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>uat</environment>
+                <spring.profiles.active>uat</spring.profiles.active>
+                <exclude.files/>
+            </properties>
+        </profile>
+        <!-- 生产环境 -->
+        <profile>
+            <id>pro</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>pro</environment>
+                <spring.profiles.active>pro</spring.profiles.active>
+                <exclude.files/>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

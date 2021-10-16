@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "file-manager.basePath",
+      "type": "java.lang.String",
+      "description": "Description for file-manager.basePath."
+    }
+  ]
+}
