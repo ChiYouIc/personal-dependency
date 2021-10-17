@@ -1,6 +1,7 @@
 package cn.cy.web.advice;
 
 import cn.cy.web.response.ApiResponse;
+import cn.cy.web.response.ResponseType;
 import cn.cy.web.response.UnifiedReturn;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -101,6 +102,12 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
             LOGGER.warn("[ResponseBodyAdvice] swagger-ui 的响应.");
             return body;
         }
-        return body instanceof ApiResponse ? body : ApiResponse.success(status, body);
+
+        // 如果是 ResponseType
+        if (body instanceof ResponseType) {
+            return body;
+        }
+
+        return ApiResponse.success(status, body);
     }
 }
