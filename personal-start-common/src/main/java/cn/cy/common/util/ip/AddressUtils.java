@@ -1,8 +1,7 @@
-package cn.cy.web.util.ip;
+package cn.cy.common.util.ip;
 
 import cn.cy.common.constants.Constants;
-import cn.cy.web.properties.Website;
-import cn.cy.web.util.http.HttpUtils;
+import cn.cy.common.util.http.HttpUtils;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -27,20 +26,18 @@ public class AddressUtils {
         if (IpUtils.internalIp(ip)) {
             return "内网IP";
         }
-        if (Website.addressEnable) {
-            try {
-                String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constants.GBK);
-                if (StrUtil.isEmpty(rspStr)) {
-                    log.error("获取地理位置异常 {}", ip);
-                    return UNKNOWN;
-                }
-                JSONObject obj = JSONUtil.parseObj(rspStr);
-                String region = obj.getStr("pro");
-                String city = obj.getStr("city");
-                return String.format("%s %s", region, city);
-            } catch (Exception e) {
+        try {
+            String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constants.GBK);
+            if (StrUtil.isEmpty(rspStr)) {
                 log.error("获取地理位置异常 {}", ip);
+                return UNKNOWN;
             }
+            JSONObject obj = JSONUtil.parseObj(rspStr);
+            String region = obj.getStr("pro");
+            String city = obj.getStr("city");
+            return String.format("%s %s", region, city);
+        } catch (Exception e) {
+            log.error("获取地理位置异常 {}", ip);
         }
         return address;
     }

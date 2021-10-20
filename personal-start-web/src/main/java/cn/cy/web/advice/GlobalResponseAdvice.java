@@ -1,7 +1,7 @@
 package cn.cy.web.advice;
 
+import cn.cy.framework.ResponseType;
 import cn.cy.web.response.ApiResponse;
-import cn.cy.web.response.ResponseType;
 import cn.cy.web.response.UnifiedReturn;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;

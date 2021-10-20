@@ -1,4 +1,4 @@
-package cn.cy.framework.util;
+package cn.cy.common.util;
 
 
 import cn.hutool.core.util.ObjectUtil;

@@ -17,6 +17,15 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-framework</artifactId>
+        </dependency>
+        <!-- common 包 -->
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-common</artifactId>
+        </dependency>
         <!-- pageHelper 分页工具 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -33,11 +42,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.cy</groupId>
-            <artifactId>personal-start-web</artifactId>
         </dependency>
     </dependencies>
 

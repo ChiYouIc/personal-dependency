@@ -1,7 +1,6 @@
-package cn.cy.web.util;
+package cn.cy.common.util;
 
 import cn.cy.common.text.Convert;
-import cn.cy.common.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

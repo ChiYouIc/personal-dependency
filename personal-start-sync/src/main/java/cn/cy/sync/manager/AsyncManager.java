@@ -2,7 +2,7 @@ package cn.cy.sync.manager;
 
 
 import cn.cy.sync.util.Threads;
-import cn.cy.web.util.spring.SpringUtil;
+import cn.hutool.extra.spring.SpringUtil;
 
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author luopeng
  */
 public class AsyncManager {
-    private static AsyncManager me = new AsyncManager();
+    private static final AsyncManager me = new AsyncManager();
     /**
      * 操作延迟10毫秒
      */
@@ -22,7 +22,7 @@ public class AsyncManager {
     /**
      * 异步操作任务调度线程池
      */
-    private ScheduledExecutorService executor = SpringUtil.getBean("scheduledExecutorService");
+    private final ScheduledExecutorService executor = SpringUtil.getBean("scheduledExecutorService");
 
     /**
      * 单例模式

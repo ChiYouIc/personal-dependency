@@ -1,4 +1,4 @@
-package cn.cy.web.util.ip;
+package cn.cy.common.util.ip;
 
 
 import cn.cy.common.util.StringUtils;

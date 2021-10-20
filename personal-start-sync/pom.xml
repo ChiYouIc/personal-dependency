@@ -23,9 +23,11 @@
         </dependency>
 
         <dependency>
-            <groupId>cn.cy</groupId>
-            <artifactId>personal-start-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
     <build>

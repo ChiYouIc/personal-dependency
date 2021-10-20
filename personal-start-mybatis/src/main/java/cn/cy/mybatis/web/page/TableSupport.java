@@ -1,7 +1,7 @@
 package cn.cy.mybatis.web.page;
 
 
-import cn.cy.web.util.RequestUtils;
+import cn.cy.common.util.RequestUtils;
 
 /**
  * 表格数据处理

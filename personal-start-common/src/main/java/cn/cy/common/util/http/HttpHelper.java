@@ -1,4 +1,4 @@
-package cn.cy.web.util.http;
+package cn.cy.common.util.http;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;

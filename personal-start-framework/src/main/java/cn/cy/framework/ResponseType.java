@@ -1,4 +1,4 @@
-package cn.cy.web.response;
+package cn.cy.framework;
 
 /**
  * @Author: 友叔

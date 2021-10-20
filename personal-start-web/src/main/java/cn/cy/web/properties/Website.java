@@ -1,7 +1,6 @@
 package cn.cy.web.properties;
 
 import cn.cy.web.properties.captcha.Captcha;
-import cn.cy.web.properties.sync.ThreadPool;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -38,11 +37,6 @@ public class Website {
      * 域名
      */
     private String host;
-    /**
-     * 线程池配置
-     */
-    @NestedConfigurationProperty
-    private ThreadPool threadPool = new ThreadPool();
 
     /**
      * 验证码配置

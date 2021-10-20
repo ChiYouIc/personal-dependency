@@ -1,4 +1,4 @@
-package cn.cy.web.util.spring;
+package cn.cy.web.util;
 
 import cn.hutool.core.util.ArrayUtil;
 import org.springframework.aop.framework.AopContext;

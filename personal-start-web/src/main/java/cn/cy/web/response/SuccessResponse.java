@@ -1,5 +1,6 @@
 package cn.cy.web.response;
 
+import cn.cy.framework.ResponseType;
 import lombok.*;
 
 /**

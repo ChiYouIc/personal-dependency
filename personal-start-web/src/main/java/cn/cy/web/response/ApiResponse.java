@@ -89,7 +89,7 @@ public class ApiResponse implements Serializable {
      *
      * @param exception
      */
-    public static <T> FailedResponse<T> failure(ErrorCodeEnum codeEnum, Exception exception) {
+    public static <T> FailedResponse failure(ErrorCodeEnum codeEnum, Exception exception) {
         ErrorCode errorCode = codeEnum.convert();
         return failure(errorCode, exception);
     }
@@ -100,7 +100,7 @@ public class ApiResponse implements Serializable {
      * @param errorCode
      * @param exception
      */
-    public static <T> FailedResponse<T> failure(ErrorCode errorCode, Exception exception) {
+    public static <T> FailedResponse failure(ErrorCode errorCode, Exception exception) {
         return null;
         /*
          * return ResponseUtils.exceptionMsg(FailedResponse.<T>builder().msg(errorCode.getMsg() ), exception) // .exception(TypeUtils.castToString(exception))
@@ -113,7 +113,7 @@ public class ApiResponse implements Serializable {
      *
      * @param errorCode
      */
-    public static <T> FailedResponse<T> failure(ErrorCode errorCode) {
+    public static <T> FailedResponse failure(ErrorCode errorCode) {
         return failure(errorCode, null);
     }
 

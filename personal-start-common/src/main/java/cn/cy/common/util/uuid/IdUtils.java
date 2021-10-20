@@ -1,4 +1,4 @@
-package cn.cy.web.util.uuid;
+package cn.cy.common.util.uuid;
 
 /**
  * ID生成器工具类

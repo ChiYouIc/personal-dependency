@@ -1,4 +1,4 @@
-package cn.cy.web.util.uuid;
+package cn.cy.common.util.uuid;
 
 import cn.hutool.core.exceptions.UtilException;
 

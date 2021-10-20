@@ -1,9 +1,9 @@
 package cn.cy.security.web.controller;
 
+import cn.cy.common.util.uuid.IdUtils;
 import cn.cy.security.web.model.Captcha;
 import cn.cy.security.web.service.ICaptchaCacheService;
 import cn.cy.web.properties.Website;
-import cn.cy.web.util.uuid.IdUtils;
 import cn.hutool.core.codec.Base64;
 import com.google.code.kaptcha.Producer;
 import org.springframework.util.FastByteArrayOutputStream;

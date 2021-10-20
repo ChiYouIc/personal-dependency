@@ -11,10 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -24,12 +21,6 @@ import java.util.List;
  */
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(BaseController.class);
-
-    @Autowired
-    protected HttpServletRequest request;
-
-    @Autowired
-    protected HttpServletResponse response;
 
     /**
      * 设置请求分页数据
@@ -52,7 +43,7 @@ public class BaseController {
      * @return 分页数据
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected <T> TableDataInfo<T> getDataTable(List<?> list) {
+    protected <T> TableDataInfo<T> getDataTable(List<T> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setRows(list);
@@ -66,13 +57,5 @@ public class BaseController {
      */
     public String redirect(String url) {
         return StrUtil.format("redirect:{}", url);
-    }
-
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
-    public HttpServletResponse getResponse() {
-        return response;
     }
 }

@@ -103,7 +103,7 @@ public class AccessLimitInterceptor implements HandlerInterceptor {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 
-    private void render(HttpServletResponse response, FailedResponse<Object> failedResponse) throws IOException {
+    private void render(HttpServletResponse response, FailedResponse failedResponse) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         OutputStream out = response.getOutputStream();
         String str = JSONUtil.toJsonStr(failedResponse);

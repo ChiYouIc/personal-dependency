@@ -1,7 +1,8 @@
-package cn.cy.web.properties.sync;
+package cn.cy.sync.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @Author: 友叔(xu)
@@ -10,7 +11,11 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@ConfigurationProperties(prefix = ThreadPool.PREFIX)
 public class ThreadPool {
+
+    public static final String PREFIX = "threadPool";
+
     // 核心线程池大小
     private int corePoolSize = 50;
 

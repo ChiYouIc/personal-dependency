@@ -1,7 +1,7 @@
 package cn.cy.mybatis.web.page;
 
 
-import cn.cy.web.response.SuccessResponse;
+import cn.cy.framework.ResponseType;
 
 import java.util.List;
 
@@ -10,8 +10,13 @@ import java.util.List;
  *
  * @author 友叔
  */
-public class TableDataInfo<T> extends SuccessResponse<T> {
+public class TableDataInfo<T> implements ResponseType {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 状态
+     */
+    private int code;
 
     /**
      * 总记录数
@@ -21,7 +26,15 @@ public class TableDataInfo<T> extends SuccessResponse<T> {
     /**
      * 列表数据
      */
-    private List<?> rows;
+    private List<T> rows;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public long getTotal() {
         return total;
@@ -31,11 +44,11 @@ public class TableDataInfo<T> extends SuccessResponse<T> {
         this.total = total;
     }
 
-    public List<?> getRows() {
+    public List<T> getRows() {
         return rows;
     }
 
-    public void setRows(List<?> rows) {
+    public void setRows(List<T> rows) {
         this.rows = rows;
     }
 }

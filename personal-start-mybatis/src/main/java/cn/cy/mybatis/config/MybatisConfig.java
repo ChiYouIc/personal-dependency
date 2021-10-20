@@ -32,6 +32,7 @@ import java.util.List;
 public class MybatisConfig {
 
     private static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
+
     @Autowired
     private Environment env;
 

@@ -1,9 +1,8 @@
 package cn.cy.sync.config;
 
 import cn.cy.sync.util.Threads;
-import cn.cy.web.properties.Website;
-import cn.cy.web.properties.sync.ThreadPool;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -18,13 +17,14 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Author 开水白菜
  */
 @Configuration
+@EnableConfigurationProperties(ThreadPool.class)
 public class ThreadPoolConfig {
+
     /**
      * 并发、异步线程池
      */
     @Bean(name = "threadPoolTaskExecutor")
-    public ThreadPoolTaskExecutor threadPoolTaskExecutor(Website website) {
-        ThreadPool pool = website.getThreadPool();
+    public ThreadPoolTaskExecutor threadPoolTaskExecutor(ThreadPool pool) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setMaxPoolSize(pool.getMaxPoolSize());
         executor.setCorePoolSize(pool.getCorePoolSize());
@@ -38,12 +38,11 @@ public class ThreadPoolConfig {
     /**
      * 执行周期性或定时任务
      *
-     * @param website
+     * @param pool
      * @return
      */
     @Bean(name = "scheduledExecutorService")
-    protected ScheduledExecutorService scheduledExecutorService(Website website) {
-        ThreadPool pool = website.getThreadPool();
+    protected ScheduledExecutorService scheduledExecutorService(ThreadPool pool) {
         return new ScheduledThreadPoolExecutor(pool.getCorePoolSize(), new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build()) {
             @Override
             protected void afterExecute(Runnable r, Throwable t) {

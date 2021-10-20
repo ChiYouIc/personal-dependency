@@ -1,5 +1,6 @@
 package cn.cy.web.response;
 
+import cn.cy.framework.ResponseType;
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-public class FailedResponse<T> implements ResponseType {
+public class FailedResponse implements ResponseType {
 
     private static final long serialVersionUID = 1L;
     /**

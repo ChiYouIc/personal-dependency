@@ -1,10 +1,12 @@
-package cn.cy.web.util.http;
+package cn.cy.common.util.http;
 
 import cn.cy.common.constants.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
+
+
 import java.io.*;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;

@@ -25,8 +25,8 @@ public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice i
     private final static Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandleAdvice.class);
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<FailedResponse<Object>> handle(HttpServletRequest request, ApiException e) {
-        FailedResponse<Object> response = FailedResponse.builder()
+    public ResponseEntity<FailedResponse> handle(HttpServletRequest request, ApiException e) {
+        FailedResponse response = FailedResponse.builder()
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .msg(e.getMessage())
                 .exception(ExceptionUtil.stacktraceToString(e))
@@ -36,8 +36,8 @@ public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice i
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<FailedResponse<Object>> handle(HttpServletRequest request, Exception e) {
-        FailedResponse<Object> response = FailedResponse.builder()
+    public ResponseEntity<FailedResponse> handle(HttpServletRequest request, Exception e) {
+        FailedResponse response = FailedResponse.builder()
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .msg(e.getMessage())
                 .exception(ExceptionUtil.stacktraceToString(e))

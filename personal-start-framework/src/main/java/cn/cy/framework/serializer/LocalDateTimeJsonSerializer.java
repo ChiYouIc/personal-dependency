@@ -1,6 +1,6 @@
 package cn.cy.framework.serializer;
 
-import cn.cy.framework.util.DateUtil;
+import cn.cy.common.util.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
