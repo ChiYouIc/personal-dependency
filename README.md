@@ -2,36 +2,21 @@
 
 #### 介绍
 
-个人依赖
+开发依赖，主要包含一些复用性较强的代码，例如 mybatis 的包扫描、异步管理、web开发的统一数据格式返回、单点登陆等等。
 
-#### 软件架构
+#### 子模块
 
-软件架构说明
+| 模块名                      | 描述                                                         |
+| --------------------------- | ------------------------------------------------------------ |
+| personal-start-dependencies | 项目的总体依赖                                               |
+| personal-start-web          | web 开发模块，统一异常处理，统一接口数据格式返回             |
+| personal-start-security     | 安全模块，使用的是 Spring Security                           |
+| personal-start-mybatis      | Mybatis 模块，实现了自定义的类路径扫描加载，自定义拦截器做权限控制（开发中） |
+| personal-start-redis        | Redis 模块，简单封装                                         |
+| personal-start-sync         | 异步模块，异步事件的管理                                     |
+| personal-start-log          | 日志，日志收集功能                                           |
+| personal-start-sso          | 单点登陆核心包                                               |
+| personal-start-framework    | 项目整体框架依赖模块（主要封装的是与Web相关的代码）          |
+| personal-start-common       | 工具集，包含了 Hutool                                        |
+| personal-start-accessLimit  | 接口的控制访问                                               |
 
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-#### 特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5. Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)

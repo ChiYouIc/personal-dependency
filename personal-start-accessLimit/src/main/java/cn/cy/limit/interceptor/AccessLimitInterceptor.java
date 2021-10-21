@@ -56,8 +56,8 @@ public class AccessLimitInterceptor implements HandlerInterceptor {
             int seconds = limit.seconds();
             int maxCount = limit.maxCount();
 
-
         }
+
         return true;
     }
 
@@ -103,6 +103,13 @@ public class AccessLimitInterceptor implements HandlerInterceptor {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 
+    /**
+     * 消息返回
+     *
+     * @param response       响应体
+     * @param failedResponse 消息封装
+     * @throws IOException
+     */
     private void render(HttpServletResponse response, FailedResponse failedResponse) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         OutputStream out = response.getOutputStream();

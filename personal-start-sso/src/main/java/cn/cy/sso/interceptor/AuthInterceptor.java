@@ -27,7 +27,7 @@ import java.util.function.BiFunction;
 @Component
 public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
     private final BiFunction<HttpServletRequest, HttpServletResponse, Boolean> handler;
 

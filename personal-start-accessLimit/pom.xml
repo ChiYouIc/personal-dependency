@@ -17,6 +17,12 @@
     </parent>
 
     <dependencies>
+
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-common</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>cn.cy</groupId>
             <artifactId>personal-start-web</artifactId>
