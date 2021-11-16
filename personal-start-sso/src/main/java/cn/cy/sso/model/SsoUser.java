@@ -15,6 +15,8 @@ public class SsoUser {
 
     private String token;
 
+    private String authKey;
+
     private String phone;
 
     private String email;
@@ -53,6 +55,14 @@ public class SsoUser {
         this.token = token;
     }
 
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    public void setAuthKey(String authKey) {
+        this.authKey = authKey;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -84,6 +94,7 @@ public class SsoUser {
                 ", userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", token='" + token + '\'' +
+                ", authKey='" + authKey + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", status=" + status +
