@@ -14,6 +14,13 @@ public class TableSupport {
      */
     public static final String PAGE_NUM = "pageNum";
 
+    public static final String CURRENT = "current";
+
+    /**
+     * 关键字
+     */
+    public static final String KEY_WORD = "current";
+
     /**
      * 每页显示记录数
      */
@@ -35,6 +42,8 @@ public class TableSupport {
     public static PageDomain getPageDomain() {
         PageDomain pageDomain = new PageDomain();
         pageDomain.setPageNum(RequestUtils.getParameterToInt(PAGE_NUM, 1));
+        pageDomain.setCurrent(RequestUtils.getParameterToInt(CURRENT, 1));
+        pageDomain.setKeyword(RequestUtils.getParameter(KEY_WORD, ""));
         pageDomain.setPageSize(RequestUtils.getParameterToInt(PAGE_SIZE, 10));
         pageDomain.setOrderByColumn(RequestUtils.getParameter(ORDER_BY_COLUMN));
         pageDomain.setIsAsc(RequestUtils.getParameter(IS_ASC));

@@ -14,6 +14,14 @@ public class PageDomain {
      */
     private Integer pageNum;
     /**
+     * 当前记录起始索引
+     */
+    private Integer current;
+    /**
+     * 关键字
+     */
+    private String keyword;
+    /**
      * 每页显示记录数
      */
     private Integer pageSize;
@@ -39,6 +47,22 @@ public class PageDomain {
 
     public void setPageNum(Integer pageNum) {
         this.pageNum = pageNum;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public Integer getPageSize() {

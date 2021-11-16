@@ -9,8 +9,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpStatus;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -20,14 +18,13 @@ import java.util.List;
  * @Description: 基础公共的Controller
  */
 public class BaseController {
-    protected final Logger logger = LoggerFactory.getLogger(BaseController.class);
 
     /**
      * 设置请求分页数据
      */
     protected void startPage() {
         PageDomain pageDomain = TableSupport.buildPageRequest();
-        Integer pageNum = pageDomain.getPageNum();
+        Integer pageNum = pageDomain.getCurrent();
         Integer pageSize = pageDomain.getPageSize();
         if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
             // 检测 orderBy 字符串，防止 sql 注入
@@ -46,7 +43,7 @@ public class BaseController {
     protected <T> TableDataInfo<T> getDataTable(List<T> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.HTTP_OK);
-        rspData.setRows(list);
+        rspData.setData(list);
         rspData.setTotal(new PageInfo(list).getTotal());
         PageHelper.clearPage();
         return rspData;

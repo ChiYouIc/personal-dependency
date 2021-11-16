@@ -11,7 +11,6 @@ import java.util.List;
  * @author 友叔
  */
 public class TableDataInfo<T> implements ResponseType {
-    private static final long serialVersionUID = 1L;
 
     /**
      * 状态
@@ -26,7 +25,7 @@ public class TableDataInfo<T> implements ResponseType {
     /**
      * 列表数据
      */
-    private List<T> rows;
+    private List<T> data;
 
     public int getCode() {
         return code;
@@ -44,11 +43,11 @@ public class TableDataInfo<T> implements ResponseType {
         this.total = total;
     }
 
-    public List<T> getRows() {
-        return rows;
+    public List<T> getData() {
+        return data;
     }
 
-    public void setRows(List<T> rows) {
-        this.rows = rows;
+    public void setData(List<T> data) {
+        this.data = data;
     }
 }
