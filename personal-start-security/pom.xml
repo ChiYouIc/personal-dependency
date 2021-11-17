@@ -17,10 +17,7 @@
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+
         <!-- SpringSecurity 安全依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,6 +47,10 @@
         <dependency>
             <groupId>cn.cy</groupId>
             <artifactId>personal-start-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-web</artifactId>
         </dependency>
     </dependencies>
 
