@@ -54,6 +54,7 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
 
         // 是否包装返回
         boolean isWrapper = true;
+        // 从 returnType 中获取包装类的可执行信息，并从中获取表示类或接口的{Class}对象，然后获取其包含的注解 UnifiedReturn
         UnifiedReturn unifiedReturn = returnType.getDeclaringClass().getAnnotation(UnifiedReturn.class);
         // unifiedReturn 不为空时，获取其它方法返回值是否需要封装信息
         if (ObjectUtil.isNotEmpty(unifiedReturn)) {
@@ -76,11 +77,8 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
      */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        // 从 returnType 中获取 包装类的可执行信息，并从中获取表示类或接口的{Class}对象，然后获取其包含的注解 UnifiedReturn
-        UnifiedReturn unifiedReturn = returnType.getExecutable().getDeclaringClass().getAnnotation(UnifiedReturn.class);
-        if (ObjectUtil.isNotEmpty(unifiedReturn)) {
-            unifiedReturn = returnType.getDeclaringClass().getAnnotation(UnifiedReturn.class);
-        }
+        // 获取执行器方法上的注解
+        UnifiedReturn unifiedReturn = returnType.getMethodAnnotation(UnifiedReturn.class);
         int status = HttpStatus.HTTP_OK;
         // unifiedReturn 不为空时，获取其其方法执行后返回的状态码
         if (ObjectUtil.isNotEmpty(unifiedReturn)) {
