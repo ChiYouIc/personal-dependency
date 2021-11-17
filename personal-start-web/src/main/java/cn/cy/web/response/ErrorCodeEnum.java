@@ -126,7 +126,10 @@ public enum ErrorCodeEnum {
      * Gen
      */
     GEN_IMPORT_TABLE_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "生成代码表导入错误", StrUtil.EMPTY),
-
+// ----------------------------------------------------数据库异常----------------------------------------------------
+    BAD_SQL_UPDATE(HttpServletResponse.SC_BAD_REQUEST, "没有任何数据被更新", StrUtil.EMPTY),
+    BAD_SQL_ADD(HttpServletResponse.SC_BAD_REQUEST, "没有任何数据被新增", StrUtil.EMPTY),
+    BAD_SQL_DELETE(HttpServletResponse.SC_BAD_REQUEST, "没有任何数据被删除", StrUtil.EMPTY),
     ;
 
     private final int code;
