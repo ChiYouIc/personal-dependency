@@ -17,6 +17,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.function.BiFunction;
 
 /**
@@ -65,9 +66,21 @@ public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
      * @return 验证结果
      */
     public boolean isClient(HttpServletRequest request, HttpServletResponse response) {
-        String token = CoreUtil.getToken(request);
-        // 进行单点登录验证
-        return sendToSsoServer(token);
+        try {
+            String token = CoreUtil.getToken(request);
+            // 进行单点登录验证
+            boolean verify = sendToSsoServer(token);
+
+            // 如果 token 验证失败
+            if (!verify) {
+                response.sendError(401, "token verify fail");
+            }
+            return verify;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     /**
@@ -102,11 +115,12 @@ public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
         }
         SsoResult body = responseEntity.getBody();
         if (body != null && body.isSuccess()) {
-            logger.info("sso server access success ...");
+            logger.info("sso server verify success ...");
             SsoUtil.setInfo(body.getUserInfo());
             return true;
         }
 
+        logger.error("sso server verify fail ...");
         return false;
     }
 

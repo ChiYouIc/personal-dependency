@@ -8,20 +8,20 @@ import cn.cy.sso.model.SsoUser;
  * @description: 单点工具；使用 ThreadLocal 将当前线程用户信息保存
  * @create: 2021-09-14 22:00
  **/
-public class SsoUtil {
+public final class SsoUtil {
 
-    private static final ThreadLocal<SsoUser> contextHolder = new ThreadLocal();
+    private static final ThreadLocal<SsoUser> CONTEXT_HOLDER = new ThreadLocal<>();
 
     public static SsoUser getInfo() {
-        return contextHolder.get();
+        return CONTEXT_HOLDER.get();
     }
 
     public static void setInfo(SsoUser ssoUser) {
-        contextHolder.set(ssoUser);
+        CONTEXT_HOLDER.set(ssoUser);
     }
 
     public static void remove() {
-        contextHolder.remove();
+        CONTEXT_HOLDER.remove();
     }
 
 }

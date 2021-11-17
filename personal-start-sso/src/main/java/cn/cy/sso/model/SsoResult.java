@@ -8,15 +8,21 @@ import java.util.StringJoiner;
  * @create: 2021-08-15 23:41
  **/
 public class SsoResult {
-    private String result = "success";
+
+    public enum Result {
+        SUCCESS,
+        FAIL
+    }
+
+    private Result result;
 
     private SsoUser userInfo;
 
-    public String getResult() {
+    public Result getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(Result result) {
         this.result = result;
     }
 
@@ -29,7 +35,7 @@ public class SsoResult {
     }
 
     public boolean isSuccess() {
-        return "success".equals(this.result);
+        return Result.SUCCESS.equals(this.result);
     }
 
     @Override
