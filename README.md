@@ -19,4 +19,5 @@
 | personal-start-framework    | 项目整体框架依赖模块（主要封装的是与Web相关的代码）          |
 | personal-start-common       | 工具集，包含了 Hutool                                        |
 | personal-start-accessLimit  | 接口的控制访问                                               |
+| personal-start-websocket    | WebSocket 连接模块                                               |
 
