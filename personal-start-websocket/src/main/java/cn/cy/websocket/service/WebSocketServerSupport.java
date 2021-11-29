@@ -48,7 +48,7 @@ public class WebSocketServerSupport implements IWebSocketServer {
     @OnMessage
     @Override
     public void onMessage(String message) {
-        log.info("receive a message: {}", message);
+        log.info("Receive a message: {}", message);
     }
 
     @OnError
@@ -64,7 +64,7 @@ public class WebSocketServerSupport implements IWebSocketServer {
 
     @Override
     public void sendMessage(String message, String toUserId) throws IOException {
-        if (WEBSOCKET_MAP.containsKey(userId)) {
+        if (WEBSOCKET_MAP.containsKey(toUserId)) {
             WEBSOCKET_MAP.get(toUserId).sendMessage(message);
         } else {
             log.warn("{} be not online", toUserId);
