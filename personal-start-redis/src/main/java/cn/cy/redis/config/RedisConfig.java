@@ -54,7 +54,6 @@ public class RedisConfig implements WebMvcConfigurer {
     /**
      * 创建 redis 的 JSON 序列化器
      */
-    @Bean
     public RedisSerializer<Object> redisSerializer() {
         // 创建 JSON 序列化器
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
