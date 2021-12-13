@@ -19,7 +19,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.Duration;
 
@@ -31,7 +30,7 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 @EnableConfigurationProperties(RedisProperties.class)
-public class RedisConfig implements WebMvcConfigurer {
+public class RedisConfig {
 
     @Bean
     public RedisProperties redisProperties() {
