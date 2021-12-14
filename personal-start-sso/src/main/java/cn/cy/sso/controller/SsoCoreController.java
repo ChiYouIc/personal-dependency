@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author: 开水白菜
@@ -32,7 +32,8 @@ public class SsoCoreController {
     }
 
     @GetMapping("/callback/{code}")
-    public Map callback(@PathVariable("code") String code) {
-        return restTemplate.getForObject("/callback/" + code, Map.class);
+    public SsoResult callback(@PathVariable("code") String code) {
+        SsoResult result = restTemplate.getForObject("/callback/" + code, SsoResult.class);
+        return Objects.requireNonNull(result);
     }
 }

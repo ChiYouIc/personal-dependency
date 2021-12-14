@@ -41,7 +41,8 @@ public class SsoCoreConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/error",
-                        "/logout");
+                        "/logout",
+                        "/callback/**");
     }
 
     /**
