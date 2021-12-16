@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "sso-core",
+      "type": "cn.cy.sso.config.properties.SsoProperties",
+      "description": "Description for sso-core."
+    },
+    {
+      "name": "sso-core.type",
+      "type": "cn.cy.sso.config.properties.ServerType",
+      "description": "Description for sso-core.type."
+    },
+    {
+      "name": "sso-core.url",
+      "type": "java.lang.String",
+      "description": "Description for sso-core.url."
+    }
+  ]
+}

@@ -16,7 +16,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @ConfigurationProperties(prefix = Website.PREFIX)
 public class Website {
 
-    public static final String PREFIX = "takeout";
+    public static final String PREFIX = "personal-web";
     /**
      * 是否开启IP地址解析
      */

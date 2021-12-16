@@ -1,0 +1,56 @@
+{
+  "properties": [
+    {
+      "name": "personal-web",
+      "type": "cn.cy.web.properties.Website",
+      "description": "web 工程配置."
+    },
+    {
+      "name": "personal-web.addressEnable",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "是否开启IP地址解析."
+    },
+    {
+      "name": "personal-web.name",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "项目名称."
+    },
+    {
+      "name": "personal-web.version",
+      "type": "java.lang.String",
+      "defaultValue": "1.0.0",
+      "description": "项目版本."
+    },
+    {
+      "name": "personal-web.copyrightYear",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "版权年份."
+    },
+    {
+      "name": "personal-web.Captcha",
+      "type": "cn.cy.web.properties.captcha.Captcha",
+      "description": "验证码配置."
+    },
+    {
+      "name": "personal-web.Captcha.captchaType",
+      "type": "java.lang.String",
+      "defaultValue": "math",
+      "description": "验证码类型（默认数字类型）."
+    },
+    {
+      "name": "personal-web.Captcha.captchaExpiration",
+      "type": "java.lang.Integer",
+      "defaultValue": 2,
+      "description": "验证码有效时间（默认两分钟）."
+    },
+    {
+      "name": "personal-web.Captcha.captchaCodeKey",
+      "type": "java.lang.String",
+      "defaultValue": "captcha_codes:",
+      "description": "验证码 redis key."
+    }
+  ]
+}

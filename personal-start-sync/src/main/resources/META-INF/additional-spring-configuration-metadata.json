@@ -1,0 +1,68 @@
+{
+  "properties": [
+    {
+      "name": "thread.async",
+      "type": "cn.cy.sync.config.AsyncProperties",
+      "description": "异步线程池配置."
+    },
+    {
+      "name": "thread.async.namePrefix",
+      "type": "java.lang.String",
+      "defaultValue": "async-service-",
+      "description": "线程的名称前缀."
+    },
+    {
+      "name": "thread.async.corePoolSize",
+      "type": "java.lang.Integer",
+      "defaultValue": 50,
+      "description": "核心线程池大小."
+    },
+    {
+      "name": "thread.async.maxPoolSize",
+      "type": "java.lang.Integer",
+      "defaultValue": 200,
+      "description": "最大可创建的线程数."
+    },
+    {
+      "name": "thread.async.queueCapacity",
+      "type": "java.lang.Integer",
+      "defaultValue": 1000,
+      "description": "队列最大长度."
+    },
+    {
+      "name": "thread.async.keepAliveSeconds",
+      "type": "java.lang.Integer",
+      "defaultValue": 300,
+      "description": "线程池维护线程所允许的空闲时间."
+    },
+    {
+      "name": "thread.schedule",
+      "type": "cn.cy.sync.config.ScheduleProperties",
+      "description": "周期执行线程池配置."
+    },
+    {
+      "name": "thread.schedule.namePrefix",
+      "type": "java.lang.String",
+      "defaultValue": "schedule-async-%d",
+      "description": "线程的名称前缀."
+    },
+    {
+      "name": "thread.schedule.corePoolSize",
+      "type": "java.lang.Integer",
+      "defaultValue": 50,
+      "description": "核心线程池大小."
+    },
+    {
+      "name": "thread.schedule.maxPoolSize",
+      "type": "java.lang.Integer",
+      "defaultValue": 200,
+      "description": "最大可创建的线程数."
+    },
+    {
+      "name": "thread.schedule.keepAliveSeconds",
+      "type": "java.lang.Integer",
+      "defaultValue": 3600,
+      "description": "线程池维护线程所允许的空闲时间."
+    }
+  ]
+}
