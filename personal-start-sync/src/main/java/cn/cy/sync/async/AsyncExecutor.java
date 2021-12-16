@@ -1,6 +1,6 @@
 package cn.cy.sync.async;
 
-import cn.hutool.extra.spring.SpringUtil;
+import cn.cy.common.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;

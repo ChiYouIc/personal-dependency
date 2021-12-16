@@ -1,8 +1,7 @@
 package cn.cy.sync.schedule;
 
-import cn.hutool.extra.spring.SpringUtil;
+import cn.cy.common.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 
 import java.util.TimerTask;
 import java.util.concurrent.*;
@@ -41,27 +40,35 @@ public class ScheduleExecutor {
 	}
 
 	public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit) {
-		return me.schedule(command, delay, unit);
+		return executor.schedule(command, delay, unit);
 	}
 
 	public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
-		return me.schedule(callable, delay, unit);
+		return executor.schedule(callable, delay, unit);
 	}
 
 	public void execute(Runnable command) {
-		me.execute(command);
+		executor.execute(command);
 	}
 
 	public Future<?> submit(Runnable task) {
-		return me.submit(task);
+		return executor.submit(task);
 	}
 
 	public <T> Future<T> submit(Runnable task, T result) {
-		return me.submit(task, result);
+		return executor.submit(task, result);
 	}
 
 	public <T> Future<T> submit(Callable<T> task) {
-		return me.submit(task);
+		return executor.submit(task);
+	}
+
+	public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
+		return executor.scheduleAtFixedRate(command, initialDelay, period, unit);
+	}
+
+	public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit) {
+		return executor.scheduleWithFixedDelay(command, initialDelay, delay, unit);
 	}
 
 }

@@ -3,9 +3,9 @@ package cn.cy.sync;
 import cn.cy.sync.async.AsyncExecutor;
 import cn.cy.sync.schedule.ScheduleExecutor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PreDestroy;
 
 /**
  * 确保应用退出时能关闭后台线程
@@ -14,9 +14,14 @@ import javax.annotation.PreDestroy;
  */
 @Slf4j
 @Component
-public class ShutdownManager {
+public class ShutdownManager implements InitializingBean, DisposableBean {
 
-    @PreDestroy
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        log.info("Initializing thread pool shutdown manager");
+    }
+
+    @Override
     public void destroy() {
         shutdownAsyncManager();
     }

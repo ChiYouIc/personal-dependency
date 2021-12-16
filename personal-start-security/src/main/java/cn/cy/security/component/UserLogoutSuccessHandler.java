@@ -5,7 +5,7 @@ import cn.cy.security.enums.LoginStatus;
 import cn.cy.security.factory.LoginLogSyncFactory;
 import cn.cy.security.util.JwtTokenUtil;
 import cn.cy.security.web.service.IUserCacheService;
-import cn.cy.sync.manager.AsyncManager;
+import cn.cy.sync.async.AsyncExecutor;
 import cn.cy.web.response.SuccessResponse;
 import cn.hutool.http.HttpStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,8 +46,8 @@ public class UserLogoutSuccessHandler implements LogoutSuccessHandler {
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
             userCacheService.deleteUserInfo(username);
             // 日志记录
-            AsyncManager.me().execute(LoginLogSyncFactory.recordLoginInfo(username, LoginStatus.LOGOUT, authToken, authentication));
-            AsyncManager.me().execute(LoginLogSyncFactory.recordLoginIpAddress());
+            AsyncExecutor.me().execute(LoginLogSyncFactory.recordLoginInfo(username, LoginStatus.LOGOUT, authToken, authentication));
+            AsyncExecutor.me().execute(LoginLogSyncFactory.recordLoginIpAddress());
         }
 
         response.setHeader("Access-Control-Allow-Origin", "*");

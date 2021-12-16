@@ -7,7 +7,7 @@ import cn.cy.security.util.JwtTokenUtil;
 import cn.cy.security.web.model.LoginUser;
 import cn.cy.security.web.model.SecurityUserDetails;
 import cn.cy.security.web.service.IUserCacheService;
-import cn.cy.sync.manager.AsyncManager;
+import cn.cy.sync.async.AsyncExecutor;
 import cn.cy.web.response.SuccessResponse;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -127,8 +127,8 @@ public class JwtTokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = jwtConfig.getTokenHead() + jwtTokenUtil.generateToken(userDetails);
         response.getWriter().println(new ObjectMapper().writeValueAsString(SuccessResponse.builder().data(token).build()));
         // 写入登陆日志
-        AsyncManager.me().execute(LoginLogSyncFactory.recordLoginInfo(userDetails.getUsername(), LoginStatus.LOGIN_SUCCESS, token, userDetails));
-        AsyncManager.me().execute(LoginLogSyncFactory.recordLoginIpAddress());
+        AsyncExecutor.me().execute(LoginLogSyncFactory.recordLoginInfo(userDetails.getUsername(), LoginStatus.LOGIN_SUCCESS, token, userDetails));
+        AsyncExecutor.me().execute(LoginLogSyncFactory.recordLoginIpAddress());
     }
 
     /**

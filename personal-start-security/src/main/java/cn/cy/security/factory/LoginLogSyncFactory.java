@@ -2,6 +2,7 @@ package cn.cy.security.factory;
 
 import cn.cy.common.util.LogUtils;
 import cn.cy.common.util.ServletUtils;
+import cn.cy.common.util.SpringUtil;
 import cn.cy.common.util.ip.AddressUtils;
 import cn.cy.common.util.ip.IpUtils;
 import cn.cy.security.enums.LoginStatus;
@@ -9,7 +10,6 @@ import cn.cy.security.web.model.LoginInfo;
 import cn.cy.security.web.model.LoginUser;
 import cn.cy.security.web.service.ILoginInfoService;
 import cn.cy.security.web.service.ISecurityUserService;
-import cn.cy.web.util.SpringUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.extern.slf4j.Slf4j;
