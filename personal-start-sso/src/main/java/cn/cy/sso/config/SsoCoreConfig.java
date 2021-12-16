@@ -36,7 +36,7 @@ public class SsoCoreConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        logger.info("Add sso core interceptor AuthInterceptor.");
+        logger.info("Add sso core interceptor AuthInterceptor");
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
@@ -50,8 +50,11 @@ public class SsoCoreConfig implements WebMvcConfigurer {
      */
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplateBuilder()
+        RestTemplate template = new RestTemplateBuilder()
                 .rootUri(properties.getUrl())
                 .build();
+        // 自定义的错误处理器
+        template.setErrorHandler(new RestResponseErrorHandler());
+        return template;
     }
 }
