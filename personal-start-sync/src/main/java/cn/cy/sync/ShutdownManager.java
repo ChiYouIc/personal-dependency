@@ -1,5 +1,7 @@
-package cn.cy.sync.manager;
+package cn.cy.sync;
 
+import cn.cy.sync.async.AsyncExecutor;
+import cn.cy.sync.schedule.ScheduleExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +27,8 @@ public class ShutdownManager {
     private void shutdownAsyncManager() {
         try {
             log.info("Close the background thread pool");
-            AsyncManager.me().shutdown();
+            AsyncExecutor.me().shutdown();
+            ScheduleExecutor.me().shutdown();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
