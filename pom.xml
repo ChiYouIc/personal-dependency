@@ -22,6 +22,7 @@
         <module>personal-start-security</module>
         <module>personal-start-sso</module>
         <module>personal-start-websocket</module>
+        <module>personal-start-validator</module>
     </modules>
 
 </project>
