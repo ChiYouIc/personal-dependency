@@ -4,8 +4,7 @@ import cn.cy.web.exception.AbstractExceptionHandleAdvice;
 import cn.cy.web.exception.ApiException;
 import cn.cy.web.response.FailedResponse;
 import cn.hutool.core.exceptions.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,9 @@ import javax.servlet.http.HttpServletRequest;
  * @Date: 2020/12/4 15:09
  * @Description: 全局异常处理
  */
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice implements Ordered {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandleAdvice.class);
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<FailedResponse> handle(HttpServletRequest request, ApiException e) {
@@ -31,7 +29,7 @@ public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice i
                 .msg(e.getMessage())
                 .exception(ExceptionUtil.stacktraceToString(e))
                 .build();
-        LOGGER.error(e.getMessage());
+        log.error(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -42,7 +40,7 @@ public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice i
                 .msg(e.getMessage())
                 .exception(ExceptionUtil.stacktraceToString(e))
                 .build();
-        LOGGER.error(e.getMessage());
+        log.error(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

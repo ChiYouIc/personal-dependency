@@ -6,9 +6,9 @@ import cn.cy.redis.service.IRedisService;
 import cn.cy.security.web.model.SecurityUserDetails;
 import cn.cy.security.web.service.IUserCacheService;
 import cn.hutool.core.collection.CollUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 @Service
 public class IUserCacheServiceImpl implements IUserCacheService {
 
-    @Autowired
+    @Resource
     private IRedisService redisService;
 
-    @Autowired
+    @Resource
     private IRedisKeysService keysService;
 
-    @Autowired
+    @Resource
     private RedisProperties redisProperties;
 
     @Override

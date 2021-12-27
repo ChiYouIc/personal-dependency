@@ -6,6 +6,7 @@ import cn.cy.web.response.UnifiedReturn;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -27,10 +28,9 @@ import java.net.URI;
  * @Date: 2020/12/3 18:05
  * @Description: 统一 restful 数据格式处理， 主要针对 RestController 与 Controller
  */
+@Slf4j
 @RestControllerAdvice(annotations = {RestController.class, Controller.class})
 public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalResponseAdvice.class);
 
     private final static String SWAGGER = "swagger";
     private final static String V2 = "v2";
@@ -97,7 +97,7 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
         // swagger 的响应信息不做处理
         URI uri = request.getURI();
         if (ObjectUtil.isNotNull(uri) && StrUtil.containsAny(uri.getPath(), SWAGGER, V2, SWAGGER_RESOURCES, API_DOCS)) {
-            LOGGER.warn("[ResponseBodyAdvice] swagger-ui 的响应.");
+            log.warn("[ResponseBodyAdvice] swagger-ui 的响应.");
             return body;
         }
 
