@@ -16,9 +16,24 @@ import java.lang.annotation.Target;
 public @interface Log {
 
     /**
+     * 操作人
+     */
+    String operator() default "";
+
+    /**
      * 描述
      */
-    String description() default "";
+    String description();
+
+    /**
+     * 操作成功描述
+     */
+    String success() default "";
+
+    /**
+     * 操作失败描述
+     */
+    String error() default "";
 
     /**
      * 操作类型
