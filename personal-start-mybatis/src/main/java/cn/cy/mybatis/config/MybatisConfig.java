@@ -85,7 +85,7 @@ public class MybatisConfig {
             if (allResult.size() > 0) {
                 typeAliasesPackage = String.join(",", allResult.toArray(new String[0]));
             } else {
-                throw new RuntimeException("mybatis typeAliasesPackage 路径扫描错误,参数typeAliasesPackage:" + typeAliasesPackage + "未找到任何包");
+                throw new RuntimeException("mybatis typeAliasesPackage 路径扫描错误,参数 typeAliasesPackage:" + typeAliasesPackage + "未找到任何包对象");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,7 +108,7 @@ public class MybatisConfig {
         // 获取配置 mapper 的扫描，找到所有的 mapper.xml 映射文件
         Resource[] mapperLocations = mybatisProperties.resolveMapperLocations();
 
-        // 获取加载全局的配置文件
+        // 获取 mybatis setting 配置文件
         String configLocation = mybatisProperties.getConfigLocation();
 
         // 解析包别名，扫描项目，获取所有的包含 VO 、domain 的包路径
@@ -120,6 +120,7 @@ public class MybatisConfig {
         sessionFactory.setTypeAliasesPackage(typeAliasesPackage);
         sessionFactory.setMapperLocations(mapperLocations);
         sessionFactory.setConfigLocation(new DefaultResourceLoader().getResource(configLocation));
+
         return sessionFactory.getObject();
     }
 }
