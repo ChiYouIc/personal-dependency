@@ -2,6 +2,7 @@ package cn.cy.log.aspectj;
 
 import cn.cy.log.Log;
 import cn.cy.log.bo.LogRecord;
+import cn.cy.log.bo.OperationStatus;
 import cn.cy.log.service.ILogRecordService;
 import cn.cy.log.service.IOperatorGetService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +12,10 @@ import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * @program: personal-website
@@ -68,8 +70,11 @@ public class LogAspect {
      */
     @AfterReturning(pointcut = "pointcut()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
-        LogRecord record = this.logRecord(joinPoint);
-        record.setResult(result);
+
+        LogRecord record = this.logRecord(joinPoint, OperationStatus.SUCCESS)
+                .setOperationStatus(OperationStatus.SUCCESS)
+                .setResult(result);
+        log.info(record.toString());
         this.record(record);
     }
 
@@ -80,8 +85,10 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "pointcut()", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
-        LogRecord record = this.logRecord(joinPoint);
-        log.error(e.getMessage());
+        LogRecord record = this.logRecord(joinPoint, OperationStatus.ERROR)
+                .setThrowable(e)
+                .setOperationStatus(OperationStatus.ERROR);
+        log.error(record.toString());
         this.record(record);
     }
 
@@ -91,29 +98,25 @@ public class LogAspect {
      * @param joinPoint 切点
      * @return 日志记录
      */
-    private LogRecord logRecord(JoinPoint joinPoint) {
+    private LogRecord logRecord(JoinPoint joinPoint, OperationStatus status) {
         // 参数信息
         Object[] args = joinPoint.getArgs();
-        for (Object arg : args) {
-            log.info(arg.toString());
-        }
 
-        // 获取接口方法
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
+        Method method = getMethod(joinPoint);
+        Log l = method.getAnnotation(Log.class);
+
+        // 解析日志描述
+        String description = status == OperationStatus.SUCCESS ? l.success() : l.error();
 
         // 日志对象
-        LogRecord record = new LogRecord().setOperator(operatorGetService.getOperator());
-
-        // 获取日志注解对象
-        Log l = method.getAnnotation(Log.class);
-        log.info("description : {}, operation : {}.", l.description(), l.operation());
-
-        GetMapping get = method.getAnnotation(GetMapping.class);
-        log.info("request method : {}, path : {}", get.path(), get.value());
-
-        return record;
+        return new LogRecord()
+                .setParams(Arrays.toString(args))
+                .setMethod(method.getName())
+                .setOperator(operatorGetService.getOperator())
+                .setDescription(description)
+                .setOperationStatus(status)
+                .setOperation(l.operation())
+                .setOperationTime(LocalDateTime.now());
     }
 
     /**
@@ -125,5 +128,17 @@ public class LogAspect {
         if (logRecordService != null) {
             logRecordService.record(logRecord);
         }
+    }
+
+    /**
+     * 从切点获取方法实例
+     *
+     * @param joinPoint 切点
+     * @return 方法实例
+     */
+    private Method getMethod(JoinPoint joinPoint) {
+        Signature signature = joinPoint.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        return methodSignature.getMethod();
     }
 }

@@ -1,8 +1,10 @@
 package cn.cy.log.config;
 
+import cn.cy.log.filter.RequestLoggingFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.AbstractRequestLoggingFilter;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 /**
@@ -15,8 +17,8 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 public class LogConfig {
 
     @Bean
-    public CommonsRequestLoggingFilter loggingFilter() {
-        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+    public AbstractRequestLoggingFilter loggingFilter() {
+        AbstractRequestLoggingFilter loggingFilter = new RequestLoggingFilter();
         // 记录 客户端 IP 信息
         loggingFilter.setIncludeClientInfo(true);
         // 记录请求头

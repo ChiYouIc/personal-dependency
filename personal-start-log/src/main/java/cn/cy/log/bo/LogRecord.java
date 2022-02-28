@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
+
 /**
  * @Author: 友叔
  * @Date: 2022/2/24 15:58
@@ -56,4 +58,9 @@ public class LogRecord {
 	 * 异常信息
 	 */
 	private Throwable throwable;
+
+	/**
+	 * 操作时间
+	 */
+	private LocalDateTime operationTime;
 }

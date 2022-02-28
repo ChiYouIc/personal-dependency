@@ -21,11 +21,6 @@ public @interface Log {
     String operator() default "";
 
     /**
-     * 描述
-     */
-    String description();
-
-    /**
      * 操作成功描述
      */
     String success() default "";
