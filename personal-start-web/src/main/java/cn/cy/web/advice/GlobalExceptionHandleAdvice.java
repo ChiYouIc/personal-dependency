@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice implements Ordered {
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<FailedResponse> handle(HttpServletRequest request, ApiException e) {
+    public ResponseEntity<FailedResponse> handleApiException(HttpServletRequest request, ApiException e) {
         FailedResponse response = FailedResponse.builder()
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .msg(e.getMessage())
