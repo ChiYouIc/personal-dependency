@@ -1,21 +1,27 @@
 package cn.cy.log.aspectj;
 
 import cn.cy.log.Log;
+import cn.cy.log.SpelUtils;
 import cn.cy.log.bo.LogRecord;
 import cn.cy.log.bo.OperationStatus;
+import cn.cy.log.expression.LogRecordExpressionEvaluator;
 import cn.cy.log.service.ILogRecordService;
 import cn.cy.log.service.IOperatorGetService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.expression.AnnotatedElementKey;
+import org.springframework.expression.EvaluationContext;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @program: personal-website
@@ -31,6 +37,8 @@ public class LogAspect {
     private final IOperatorGetService operatorGetService;
 
     private final ILogRecordService logRecordService;
+
+    private final LogRecordExpressionEvaluator<String> evaluator = new LogRecordExpressionEvaluator<>();
 
     public LogAspect(@Autowired IOperatorGetService operatorGetService, @Autowired(required = false) ILogRecordService logRecordService) {
         this.operatorGetService = operatorGetService;
@@ -71,7 +79,7 @@ public class LogAspect {
     @AfterReturning(pointcut = "pointcut()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
 
-        LogRecord record = this.logRecord(joinPoint, OperationStatus.SUCCESS)
+        LogRecord record = this.logRecord(joinPoint, OperationStatus.SUCCESS, result, "")
                 .setOperationStatus(OperationStatus.SUCCESS)
                 .setResult(result);
         log.info(record.toString());
@@ -85,7 +93,7 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "pointcut()", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
-        LogRecord record = this.logRecord(joinPoint, OperationStatus.ERROR)
+        LogRecord record = this.logRecord(joinPoint, OperationStatus.ERROR, null, e.getMessage())
                 .setThrowable(e)
                 .setOperationStatus(OperationStatus.ERROR);
         log.error(record.toString());
@@ -96,21 +104,38 @@ public class LogAspect {
      * 日志记录封装
      *
      * @param joinPoint 切点
+     * @param status    状态
      * @return 日志记录
      */
-    private LogRecord logRecord(JoinPoint joinPoint, OperationStatus status) {
-        // 参数信息
-        Object[] args = joinPoint.getArgs();
+    private LogRecord logRecord(JoinPoint joinPoint, OperationStatus status, Object result, String errMsg) {
+        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
 
-        Method method = getMethod(joinPoint);
+        // 参数
+        Map<String, Object> paramMap = methodParamMap(joinPoint);
+
         Log l = method.getAnnotation(Log.class);
 
         // 解析日志描述
         String description = status == OperationStatus.SUCCESS ? l.success() : l.error();
 
+        Object targetObject = joinPoint.getTarget();
+        Class<?> targetObjectClass = targetObject.getClass();
+        Object[] args = joinPoint.getArgs();
+        // 表达式在评估上下文中执行。正是在这种情况下，在表达式评估期间遇到引用时会解析。
+        EvaluationContext evaluationContext = evaluator.createEvaluationContext(targetObject, method, targetObjectClass, args, result, errMsg);
+        AnnotatedElementKey methodKey = new AnnotatedElementKey(method, targetObjectClass);
+
+        // 解析 Spel 表达式
+        List<String> strings = SpelUtils.parseExpression(description);
+        for (String condition : strings) {
+            // 执行 condition
+            String value = evaluator.condition(condition, methodKey, evaluationContext, String.class);
+            description = description.replaceFirst(SpelUtils.REG, Optional.ofNullable(value).orElse("null"));
+        }
+
         // 日志对象
         return new LogRecord()
-                .setParams(Arrays.toString(args))
+                .setParams(paramMap)
                 .setMethod(method.getName())
                 .setOperator(operatorGetService.getOperator())
                 .setDescription(description)
@@ -131,14 +156,24 @@ public class LogAspect {
     }
 
     /**
-     * 从切点获取方法实例
+     * 方法参数获取
      *
      * @param joinPoint 切点
-     * @return 方法实例
+     * @return 方法参数，key 参数名称，value 参数值
      */
-    private Method getMethod(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        return methodSignature.getMethod();
+    private Map<String, Object> methodParamMap(JoinPoint joinPoint) {
+
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+
+        String[] parameterNames = methodSignature.getParameterNames();
+        Object[] args = joinPoint.getArgs();
+
+        Map<String, Object> paramMap = new HashMap<>(16);
+        for (int i = 0; i < args.length; i++) {
+            paramMap.put(parameterNames[i], args[i]);
+        }
+
+        return paramMap;
     }
+
 }

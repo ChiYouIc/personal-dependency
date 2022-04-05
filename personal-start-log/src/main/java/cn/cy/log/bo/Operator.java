@@ -19,4 +19,9 @@ public class Operator {
 	private String id;
 
 	private String operatorName;
+
+	public Operator(String id, String operatorName) {
+		this.id = id;
+		this.operatorName = operatorName;
+	}
 }
