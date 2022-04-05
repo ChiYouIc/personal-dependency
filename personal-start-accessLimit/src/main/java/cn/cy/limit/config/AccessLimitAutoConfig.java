@@ -1,5 +1,6 @@
 package cn.cy.limit.config;
 
+import cn.cy.limit.IAccessLimitService;
 import cn.cy.limit.interceptor.AccessLimitInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,11 +17,11 @@ import javax.annotation.Resource;
 public class AccessLimitAutoConfig implements WebMvcConfigurer {
 
     @Resource
-    private AccessLimitInterceptor accessLimitInterceptor;
+    private IAccessLimitService<?> accessLimitService;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(accessLimitInterceptor);
+        registry.addInterceptor(new AccessLimitInterceptor(this.accessLimitService));
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

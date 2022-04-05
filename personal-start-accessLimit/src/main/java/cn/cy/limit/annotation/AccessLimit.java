@@ -16,11 +16,11 @@ public @interface AccessLimit {
     /**
      * 访问时限
      */
-    int seconds() default 3;
+    int seconds() default 2;
 
     /**
      * 在 seconds 内，最大访问次数
      */
-    int maxCount() default 3;
+    int maxCount() default 1;
 
 }

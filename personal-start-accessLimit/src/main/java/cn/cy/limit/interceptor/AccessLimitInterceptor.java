@@ -1,11 +1,12 @@
 package cn.cy.limit.interceptor;
 
+import cn.cy.limit.IAccessLimitService;
 import cn.cy.limit.annotation.AccessLimit;
 import cn.cy.web.response.FailedResponse;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,9 +22,15 @@ import java.nio.charset.StandardCharsets;
  * @Date: 2021/7/22 11:13
  * @Description: 接口访问控制拦截器
  */
-@Slf4j
-@Component("accessLimitInterceptor")
 public class AccessLimitInterceptor implements HandlerInterceptor {
+
+    private final IAccessLimitService<?> accessLimitService;
+
+    private final static Logger log = LoggerFactory.getLogger(AccessLimitInterceptor.class);
+
+    public AccessLimitInterceptor(final IAccessLimitService<?> accessLimitService) {
+        this.accessLimitService = accessLimitService;
+    }
 
     /**
      * <p>拦截处理程序的执行。 在 HandlerMapping 确定合适的处理程序对象之后，但在 HandlerAdapter 调用处理程序之前调用
@@ -40,11 +47,13 @@ public class AccessLimitInterceptor implements HandlerInterceptor {
      * @return 默认实现返回true
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (handler instanceof HandlerMethod) {
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
-            log.info("[*] access method : {}", handlerMethod.getMethod().getName());
+        // HandleMethod : 封装有关由方法和bean组成的处理程序方法的信息
+        if (handler instanceof HandlerMethod) {
+            String path = request.getRequestURI();
+
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
 
             AccessLimit limit = handlerMethod.getMethodAnnotation(AccessLimit.class);
 
@@ -56,6 +65,15 @@ public class AccessLimitInterceptor implements HandlerInterceptor {
             int seconds = limit.seconds();
             int maxCount = limit.maxCount();
 
+            if (accessLimitService.containPath(path)) {
+                log.error("The path '{}' access frequency is too high", path);
+                FailedResponse failedResponse = new FailedResponse();
+                failedResponse.setMsg("接口: " + path + " 访问频率过高！");
+                this.render(response, failedResponse);
+                return false;
+            }
+
+            this.accessLimitService.addPath(path);
         }
 
         return true;
@@ -100,7 +118,7 @@ public class AccessLimitInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+        this.accessLimitService.removePath(request.getRequestURI());
     }
 
     /**
