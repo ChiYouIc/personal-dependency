@@ -1,7 +1,10 @@
 package cn.cy.log.aspect;
 
 import cn.cy.log.Log;
+import cn.cy.log.expression.LogRecordContext;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author: you
@@ -10,6 +13,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TestServiceComponent {
+
+    @Resource
+    private TestServiceComponent self;
 
     @Log(success = "{#msg}转大写{#msg.toUpperCase}")
     public void test(String msg) {
@@ -43,8 +49,25 @@ public class TestServiceComponent {
 
     @Log(success = "更新：{#user}，结果：{#_ret}", error = "异常：{#_errorMsg}")
     public String update(String user) {
-        del(user);
-        add(user);
+        self.del(user);
+        self.add(user);
         return "更新成功";
+    }
+
+    @Log(success = "姓名: {#name}，昵称：{#nickName}")
+    public void logRecordContextTest() {
+        LogRecordContext.putVariable("name", "chiyou");
+        self.logRecordContextTest1();
+        self.logRecordContextTest2();
+    }
+
+    @Log(success = "姓名: {#name}")
+    public void logRecordContextTest1() {
+        LogRecordContext.putVariable("name", "chiyou");
+    }
+
+    @Log(success = "昵称：{#nickName}")
+    public void logRecordContextTest2() {
+        LogRecordContext.putVariable("nickName", "coder-you");
     }
 }

@@ -1,6 +1,6 @@
 package cn.cy.log.service;
 
-import cn.cy.log.bo.LogRecord;
+import cn.cy.log.bo.OperationLog;
 
 /**
  * @Author: 友叔
@@ -9,11 +9,11 @@ import cn.cy.log.bo.LogRecord;
  */
 public interface ILogRecordService {
 
-	/**
-	 * 保存日志
-	 *
-	 * @param logRecord 日志记录
-	 */
-	public void record(LogRecord logRecord);
+    /**
+     * 保存操作日志日志
+     *
+     * @param operationLog 日志记录
+     */
+    public void record(OperationLog operationLog);
 
 }

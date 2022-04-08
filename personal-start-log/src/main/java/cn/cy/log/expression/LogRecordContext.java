@@ -11,11 +11,19 @@ import java.util.Stack;
  */
 public class LogRecordContext {
     private static InheritableThreadLocal<Stack<Map<String, Object>>> variableMapStack = new InheritableThreadLocal<>();
+    private static InheritableThreadLocal<Stack<String>> auditLogStack = new InheritableThreadLocal<>();
 
     public static void putVariable(String key, Object value) {
-        HashMap<String, Object> map = new HashMap<>(8);
+
+        Stack<Map<String, Object>> stack = variableMapStack.get();
+        if (stack == null) {
+            stack = new Stack<>();
+            variableMapStack.set(stack);
+        }
+
+        HashMap<String, Object> map = new HashMap<>(1);
         map.put(key, value);
-        variableMapStack.get().push(map);
+        stack.push(map);
     }
 
     public static Map<String, Object> getVariables() {
@@ -24,5 +32,14 @@ public class LogRecordContext {
             return variableMapStack.get().pop();
         }
         return null;
+    }
+
+    public static void auditLog(String msg) {
+        Stack<String> stack = auditLogStack.get();
+        if (stack == null) {
+            stack = new Stack<>();
+            auditLogStack.set(stack);
+        }
+        stack.push(msg);
     }
 }

@@ -44,4 +44,9 @@ public class LogAspectTest {
     public void logTestUpdate() {
         component.update("chiyou");
     }
+
+    @Test
+    public void logRecordContextTest() {
+        component.logRecordContextTest();
+    }
 }

@@ -7,6 +7,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Map;
 @Setter
 @ToString
 @Accessors(chain = true)
-public class LogRecord {
+public class OperationLog {
 
     /**
      * 操作者
@@ -64,4 +65,9 @@ public class LogRecord {
      * 操作时间
      */
     private LocalDateTime operationTime;
+
+    /**
+     * 审计日志列表
+     */
+    private List<AuditLog> auditLogList;
 }

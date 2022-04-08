@@ -12,30 +12,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
-	@Override
-	protected boolean shouldLog(HttpServletRequest request) {
-		return logger.isDebugEnabled();
-	}
+    @Override
+    protected boolean shouldLog(HttpServletRequest request) {
+        return logger.isDebugEnabled();
+    }
 
-	/**
-	 * 请求被处理前
-	 *
-	 * @param request 请求
-	 * @param message 请求消息
-	 */
-	@Override
-	protected void beforeRequest(HttpServletRequest request, String message) {
-		logger.debug(message);
-	}
+    /**
+     * 请求被处理前
+     *
+     * @param request 请求
+     * @param message 请求消息
+     */
+    @Override
+    protected void beforeRequest(HttpServletRequest request, String message) {
+        logger.debug(message);
+    }
 
-	/**
-	 * 请求处理后执行
-	 *
-	 * @param request 请求
-	 * @param message 请求消息
-	 */
-	@Override
-	protected void afterRequest(HttpServletRequest request, String message) {
-		logger.debug(message);
-	}
+    /**
+     * 请求处理后执行
+     *
+     * @param request 请求
+     * @param message 请求消息
+     */
+    @Override
+    protected void afterRequest(HttpServletRequest request, String message) {
+        logger.debug(message);
+    }
 }

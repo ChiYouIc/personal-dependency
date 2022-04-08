@@ -2,7 +2,7 @@ package cn.cy.log.aspectj;
 
 import cn.cy.log.Log;
 import cn.cy.log.SpelUtils;
-import cn.cy.log.bo.LogRecord;
+import cn.cy.log.bo.OperationLog;
 import cn.cy.log.bo.OperationStatus;
 import cn.cy.log.expression.LogRecordExpressionEvaluator;
 import cn.cy.log.service.ILogRecordService;
@@ -79,11 +79,11 @@ public class LogAspect {
     @AfterReturning(pointcut = "pointcut()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
 
-        LogRecord record = this.logRecord(joinPoint, OperationStatus.SUCCESS, result, "")
+        OperationLog record = this.operationLog(joinPoint, OperationStatus.SUCCESS, result, "")
                 .setOperationStatus(OperationStatus.SUCCESS)
                 .setResult(result);
-        log.info(record.toString());
-        this.record(record);
+        log.info(this.formatter(record));
+        this.saveRecord(record);
     }
 
     /**
@@ -93,11 +93,11 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "pointcut()", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
-        LogRecord record = this.logRecord(joinPoint, OperationStatus.ERROR, null, e.getMessage())
+        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.ERROR, null, e.getMessage())
                 .setThrowable(e)
                 .setOperationStatus(OperationStatus.ERROR);
-        log.error(record.toString());
-        this.record(record);
+        log.error(this.formatter(operationLog));
+        this.saveRecord(operationLog);
     }
 
     /**
@@ -107,7 +107,7 @@ public class LogAspect {
      * @param status    状态
      * @return 日志记录
      */
-    private LogRecord logRecord(JoinPoint joinPoint, OperationStatus status, Object result, String errMsg) {
+    private OperationLog operationLog(JoinPoint joinPoint, OperationStatus status, Object result, String errMsg) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
 
         // 参数
@@ -134,7 +134,7 @@ public class LogAspect {
         }
 
         // 日志对象
-        return new LogRecord()
+        return new OperationLog()
                 .setParams(paramMap)
                 .setMethod(method.getName())
                 .setOperator(operatorGetService.getOperator())
@@ -145,13 +145,13 @@ public class LogAspect {
     }
 
     /**
-     * 保存日志记录
+     * 保存操作日志记录
      *
-     * @param logRecord 日志记录
+     * @param operationLog 操作日志
      */
-    private void record(LogRecord logRecord) {
+    private void saveRecord(OperationLog operationLog) {
         if (logRecordService != null) {
-            logRecordService.record(logRecord);
+            logRecordService.record(operationLog);
         }
     }
 
@@ -174,6 +174,16 @@ public class LogAspect {
         }
 
         return paramMap;
+    }
+
+    /**
+     * 格式化日志输出
+     *
+     * @param operationLog 日志对象
+     * @return 日志内容
+     */
+    private String formatter(OperationLog operationLog) {
+        return operationLog.toString();
     }
 
 }
