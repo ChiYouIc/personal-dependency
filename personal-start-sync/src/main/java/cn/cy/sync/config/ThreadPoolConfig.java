@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -21,8 +22,11 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Configuration
+@ComponentScan(basePackages = ThreadPoolConfig.BASE_PACKAGE)
 @EnableConfigurationProperties({AsyncProperties.class, ScheduleProperties.class})
 public class ThreadPoolConfig {
+
+    protected final static String BASE_PACKAGE = "cn.cy.sync";
 
     /**
      * 并发、异步线程池

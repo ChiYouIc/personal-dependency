@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -29,8 +30,11 @@ import java.time.Duration;
  */
 @Configuration
 @EnableCaching
+@ComponentScan(basePackages = RedisConfig.BASE_PACKAGE)
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
+
+    protected final static String BASE_PACKAGE = "cn.cy.redis";
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {

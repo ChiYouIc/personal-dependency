@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,8 +21,11 @@ import javax.annotation.Resource;
  * @Description: sso单点核心配置
  */
 @Configuration
+@ComponentScan(basePackages = SsoCoreConfig.BASE_PACKAGE)
 @EnableConfigurationProperties(value = SsoProperties.class)
 public class SsoCoreConfig implements WebMvcConfigurer {
+
+    protected final static String BASE_PACKAGE = "cn.cy.sso";
 
     private final static Log logger = LogFactory.getLog(SsoCoreConfig.class);
 

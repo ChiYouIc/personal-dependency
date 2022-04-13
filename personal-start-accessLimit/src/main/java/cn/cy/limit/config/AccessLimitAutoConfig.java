@@ -2,6 +2,7 @@ package cn.cy.limit.config;
 
 import cn.cy.limit.IAccessLimitService;
 import cn.cy.limit.interceptor.AccessLimitInterceptor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,7 +15,10 @@ import javax.annotation.Resource;
  * @Description: 配置
  */
 @Configuration
+@ComponentScan(basePackages = AccessLimitAutoConfig.BASE_PACKAGE)
 public class AccessLimitAutoConfig implements WebMvcConfigurer {
+
+    protected static final String BASE_PACKAGE = "cn.cy.limit";
 
     @Resource
     private IAccessLimitService<?> accessLimitService;

@@ -3,9 +3,9 @@ package cn.cy.log.config;
 import cn.cy.log.filter.RequestLoggingFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 /**
  * @author: 开水白菜
@@ -14,7 +14,10 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
  **/
 @Slf4j
 @Configuration
+@ComponentScan(basePackages = {LogConfig.BASE_PACKAGE})
 public class LogConfig {
+
+    protected final static String BASE_PACKAGE = "cn.cy.log";
 
     @Bean
     public AbstractRequestLoggingFilter loggingFilter() {

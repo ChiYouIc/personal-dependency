@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -28,7 +29,10 @@ import java.util.List;
  * @Description: Mybatis 配置
  */
 @Configuration
+@ComponentScan(basePackages = MybatisConfig.BASE_PACKAGE)
 public class MybatisConfig {
+
+    protected static final String BASE_PACKAGE = "cn.cy.mybatis";
 
     private static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
 
