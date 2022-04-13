@@ -9,13 +9,7 @@ import java.util.StringJoiner;
  **/
 public class SsoResult {
 
-    public enum Result {
-        SUCCESS,
-        FAIL
-    }
-
     private Result result;
-
     private SsoUser userInfo;
 
     public Result getResult() {
@@ -44,5 +38,10 @@ public class SsoResult {
                 .add("result='" + result + "'")
                 .add("userInfo=" + userInfo)
                 .toString();
+    }
+
+    public enum Result {
+        SUCCESS,
+        FAIL
     }
 }

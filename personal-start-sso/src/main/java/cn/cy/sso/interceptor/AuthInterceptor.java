@@ -7,11 +7,9 @@ import cn.cy.sso.utils.CoreUtil;
 import cn.cy.sso.utils.SsoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -25,7 +23,6 @@ import java.util.function.BiFunction;
  * @Date: 2021/1/7 21:41
  * @Description: 拦截器
  */
-@Component
 public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
@@ -34,7 +31,6 @@ public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
 
     private final RestTemplate restTemplate;
 
-    @Autowired
     public AuthInterceptor(SsoProperties ssoProperties, RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
         this.handler = ssoProperties.getType() == ServerType.CLIENT ? this::isClient : this::isServer;

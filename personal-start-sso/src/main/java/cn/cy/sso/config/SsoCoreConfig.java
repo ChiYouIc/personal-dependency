@@ -32,16 +32,13 @@ public class SsoCoreConfig implements WebMvcConfigurer {
     @Resource
     private SsoProperties properties;
 
-    @Resource
-    private AuthInterceptor authInterceptor;
-
     /**
      * 配置拦截器 AuthInterceptor
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         logger.info("Add sso core interceptor AuthInterceptor");
-        registry.addInterceptor(authInterceptor)
+        registry.addInterceptor(new AuthInterceptor(properties, restTemplate()))
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/error",
