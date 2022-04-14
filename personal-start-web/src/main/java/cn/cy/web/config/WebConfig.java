@@ -2,6 +2,7 @@ package cn.cy.web.config;
 
 import cn.cy.web.properties.Website;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -16,8 +17,11 @@ import java.util.List;
  * @create: 2021-10-15 00:37
  **/
 @Configuration
+@ComponentScan(basePackages = WebConfig.BASE_PACKAGE)
 @EnableConfigurationProperties(Website.class)
 public class WebConfig implements WebMvcConfigurer {
+
+    protected final static String BASE_PACKAGE = "cn.cy.web";
 
     @Resource
     private MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
