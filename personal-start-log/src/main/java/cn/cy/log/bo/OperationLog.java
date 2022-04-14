@@ -21,6 +21,8 @@ import java.util.Map;
 @Accessors(chain = true)
 public class OperationLog {
 
+    private String operationLogId;
+
     /**
      * 操作者
      */

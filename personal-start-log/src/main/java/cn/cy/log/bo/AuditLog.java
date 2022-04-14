@@ -21,7 +21,7 @@ public class AuditLog {
     /**
      * 操作日志ID
      */
-    private String logRecordId;
+    private String operationLogId;
 
     /**
      * 审计内容

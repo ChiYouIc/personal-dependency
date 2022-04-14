@@ -57,6 +57,8 @@ public class TestServiceComponent {
     @Log(success = "姓名: {#name}，昵称：{#nickName}")
     public void logRecordContextTest() {
         LogRecordContext.putVariable("name", "chiyou");
+        LogRecordContext.putVariable("nickName", "coder-you");
+        LogRecordContext.auditLog("logRecordContextTest");
         self.logRecordContextTest1();
         self.logRecordContextTest2();
     }
@@ -64,10 +66,12 @@ public class TestServiceComponent {
     @Log(success = "姓名: {#name}")
     public void logRecordContextTest1() {
         LogRecordContext.putVariable("name", "chiyou");
+        LogRecordContext.auditLog("logRecordContextTest1");
     }
 
     @Log(success = "昵称：{#nickName}")
     public void logRecordContextTest2() {
         LogRecordContext.putVariable("nickName", "coder-you");
+        LogRecordContext.auditLog("logRecordContextTest2");
     }
 }

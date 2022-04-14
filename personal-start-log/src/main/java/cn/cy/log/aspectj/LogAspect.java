@@ -2,8 +2,10 @@ package cn.cy.log.aspectj;
 
 import cn.cy.log.Log;
 import cn.cy.log.SpelUtils;
+import cn.cy.log.bo.AuditLog;
 import cn.cy.log.bo.OperationLog;
 import cn.cy.log.bo.OperationStatus;
+import cn.cy.log.expression.LogRecordContext;
 import cn.cy.log.expression.LogRecordExpressionEvaluator;
 import cn.cy.log.service.ILogRecordService;
 import cn.cy.log.service.IOperatorGetService;
@@ -18,13 +20,9 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
- * @program: personal-website
  * @author: 开水白菜
  * @description: 日志切面
  * @create: 2021-07-13 20:11
@@ -60,7 +58,7 @@ public class LogAspect {
      */
     @Before(value = "pointcut()")
     public void before(JoinPoint joinPoint) {
-
+        LogRecordContext.initVariableMap();
     }
 
     /**
@@ -78,11 +76,9 @@ public class LogAspect {
      */
     @AfterReturning(pointcut = "pointcut()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
-
         OperationLog record = this.operationLog(joinPoint, OperationStatus.SUCCESS, result, "")
                 .setOperationStatus(OperationStatus.SUCCESS)
                 .setResult(result);
-        log.info(this.formatter(record));
         this.saveRecord(record);
     }
 
@@ -96,7 +92,6 @@ public class LogAspect {
         OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.ERROR, null, e.getMessage())
                 .setThrowable(e)
                 .setOperationStatus(OperationStatus.ERROR);
-        log.error(this.formatter(operationLog));
         this.saveRecord(operationLog);
     }
 
@@ -133,6 +128,9 @@ public class LogAspect {
             description = description.replaceFirst(SpelUtils.REG, Optional.ofNullable(value).orElse("null"));
         }
 
+        // 解析审计日志
+        Stack<AuditLog> auditLogStack = LogRecordContext.getAuditLog();
+
         // 日志对象
         return new OperationLog()
                 .setParams(paramMap)
@@ -141,7 +139,8 @@ public class LogAspect {
                 .setDescription(description)
                 .setOperationStatus(status)
                 .setOperation(l.operation())
-                .setOperationTime(LocalDateTime.now());
+                .setOperationTime(LocalDateTime.now())
+                .setAuditLogList(auditLogStack);
     }
 
     /**
@@ -150,6 +149,7 @@ public class LogAspect {
      * @param operationLog 操作日志
      */
     private void saveRecord(OperationLog operationLog) {
+        log.info(this.formatter(operationLog));
         if (logRecordService != null) {
             logRecordService.record(operationLog);
         }
