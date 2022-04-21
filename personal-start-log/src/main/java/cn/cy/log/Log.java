@@ -1,5 +1,7 @@
 package cn.cy.log;
 
+import cn.cy.log.OperationType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

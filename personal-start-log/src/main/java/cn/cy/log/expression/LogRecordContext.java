@@ -1,6 +1,7 @@
 package cn.cy.log.expression;
 
 import cn.cy.log.bo.AuditLog;
+import cn.cy.log.bo.AuditLogLevel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -72,11 +73,13 @@ public class LogRecordContext {
      *
      * @param msg 日志信息
      */
-    public static void auditLog(String msg) {
-        log.info(msg);
+    public static void auditLog(String msg, AuditLogLevel level) {
         Stack<Stack<AuditLog>> stacks = auditLogStack.get();
         Stack<AuditLog> lastElement = stacks.lastElement();
-        AuditLog log = new AuditLog().setOperationTime(LocalDateTime.now()).setAuditContent(msg);
+        AuditLog log = new AuditLog()
+                .setOperationTime(LocalDateTime.now())
+                .setAuditContent(msg)
+                .setLevel(level);
         lastElement.push(log);
     }
 

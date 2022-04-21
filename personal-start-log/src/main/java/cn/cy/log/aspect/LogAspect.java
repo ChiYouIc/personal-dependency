@@ -1,4 +1,4 @@
-package cn.cy.log.aspectj;
+package cn.cy.log.aspect;
 
 import cn.cy.log.Log;
 import cn.cy.log.SpelUtils;

@@ -33,4 +33,9 @@ public class AuditLog {
      */
     private LocalDateTime operationTime;
 
+    /**
+     * 日志级别
+     */
+    private AuditLogLevel level;
+
 }
