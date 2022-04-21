@@ -76,10 +76,8 @@ public class LogAspect {
      */
     @AfterReturning(pointcut = "pointcut()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
-        OperationLog record = this.operationLog(joinPoint, OperationStatus.SUCCESS, result, "")
-                .setOperationStatus(OperationStatus.SUCCESS)
-                .setResult(result);
-        this.saveRecord(record);
+        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.SUCCESS, result, "").setResult(result);
+        this.saveRecord(operationLog);
     }
 
     /**
@@ -89,9 +87,7 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "pointcut()", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
-        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.ERROR, null, e.getMessage())
-                .setThrowable(e)
-                .setOperationStatus(OperationStatus.ERROR);
+        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.ERROR, null, e.getMessage()).setThrowable(e);
         this.saveRecord(operationLog);
     }
 
@@ -104,6 +100,7 @@ public class LogAspect {
      */
     private OperationLog operationLog(JoinPoint joinPoint, OperationStatus status, Object result, String errMsg) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+        String traceId = method.getName() + "_" + System.currentTimeMillis();
 
         // 参数
         Map<String, Object> paramMap = methodParamMap(joinPoint);
@@ -130,9 +127,13 @@ public class LogAspect {
 
         // 解析审计日志
         Stack<AuditLog> auditLogStack = LogRecordContext.getAuditLog();
+        if (auditLogStack != null) {
+            auditLogStack.forEach(o -> o.setTraceId(traceId));
+        }
 
         // 日志对象
         return new OperationLog()
+                .setTraceId(traceId)
                 .setParams(paramMap)
                 .setMethod(method.getName())
                 .setOperator(operatorGetService.getOperator())

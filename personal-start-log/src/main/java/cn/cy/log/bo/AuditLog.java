@@ -18,10 +18,12 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class AuditLog {
 
+    private Long id;
+
     /**
      * 操作日志ID
      */
-    private String operationLogId;
+    private String traceId;
 
     /**
      * 审计内容
