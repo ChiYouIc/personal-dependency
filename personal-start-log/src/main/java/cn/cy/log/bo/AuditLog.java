@@ -23,6 +23,11 @@ public class AuditLog {
     /**
      * 操作日志ID
      */
+    private Long operationId;
+
+    /**
+     * 操作日志ID
+     */
     private String traceId;
 
     /**

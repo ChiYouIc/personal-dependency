@@ -9,6 +9,8 @@ import cn.cy.log.expression.LogRecordContext;
 import cn.cy.log.expression.LogRecordExpressionEvaluator;
 import cn.cy.log.service.ILogRecordService;
 import cn.cy.log.service.IOperatorGetService;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -20,7 +22,9 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Stack;
 
 /**
  * @author: 开水白菜
@@ -76,7 +80,7 @@ public class LogAspect {
      */
     @AfterReturning(pointcut = "pointcut()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
-        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.SUCCESS, result, "").setResult(result);
+        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.SUCCESS, result, "").setResult(JSONUtil.toJsonStr(result));
         this.saveRecord(operationLog);
     }
 
@@ -87,7 +91,7 @@ public class LogAspect {
      */
     @AfterThrowing(pointcut = "pointcut()", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
-        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.ERROR, null, e.getMessage()).setThrowable(e);
+        OperationLog operationLog = this.operationLog(joinPoint, OperationStatus.ERROR, null, e.getMessage()).setThrowable(JSONUtil.toJsonStr(e));
         this.saveRecord(operationLog);
     }
 
@@ -104,7 +108,7 @@ public class LogAspect {
         String traceId = className + "." + method.getName() + "-" + System.currentTimeMillis();
 
         // 参数
-        Map<String, Object> paramMap = methodParamMap(joinPoint);
+        String paramMap = methodParamMap(joinPoint);
 
         Log l = method.getAnnotation(Log.class);
 
@@ -151,7 +155,6 @@ public class LogAspect {
      * @param operationLog 操作日志
      */
     private void saveRecord(OperationLog operationLog) {
-        log.info(this.formatter(operationLog));
         if (logRecordService != null) {
             logRecordService.record(operationLog);
         }
@@ -163,19 +166,20 @@ public class LogAspect {
      * @param joinPoint 切点
      * @return 方法参数，key 参数名称，value 参数值
      */
-    private Map<String, Object> methodParamMap(JoinPoint joinPoint) {
+    private String methodParamMap(JoinPoint joinPoint) {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 
         String[] parameterNames = methodSignature.getParameterNames();
         Object[] args = joinPoint.getArgs();
 
-        Map<String, Object> paramMap = new HashMap<>(16);
+        JSONObject object = new JSONObject();
+
         for (int i = 0; i < args.length; i++) {
-            paramMap.put(parameterNames[i], args[i]);
+            object.putOpt(parameterNames[i], args[i]);
         }
 
-        return paramMap;
+        return object.toString();
     }
 
     /**

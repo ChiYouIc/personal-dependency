@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: 友叔
@@ -40,13 +39,15 @@ public class OperationLog {
 
     /**
      * 参数
+     * <p> JSON 格式
      */
-    private Map<String, Object> params;
+    private String params;
 
     /**
      * 返回结果
+     * <p> JSON 格式
      */
-    private Object result;
+    private String result;
 
     /**
      * 日志描述
@@ -65,8 +66,9 @@ public class OperationLog {
 
     /**
      * 异常信息
+     * <p> JSON 格式
      */
-    private Throwable throwable;
+    private String throwable;
 
     /**
      * 操作时间

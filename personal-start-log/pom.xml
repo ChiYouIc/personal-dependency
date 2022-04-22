@@ -23,6 +23,12 @@
         </dependency>
 
         <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>compile</scope>
