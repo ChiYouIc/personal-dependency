@@ -100,7 +100,8 @@ public class LogAspect {
      */
     private OperationLog operationLog(JoinPoint joinPoint, OperationStatus status, Object result, String errMsg) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        String traceId = method.getName() + "_" + System.currentTimeMillis();
+        String className = joinPoint.getTarget().getClass().getName();
+        String traceId = className + "." + method.getName() + "-" + System.currentTimeMillis();
 
         // 参数
         Map<String, Object> paramMap = methodParamMap(joinPoint);
