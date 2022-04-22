@@ -1,6 +1,5 @@
 package cn.cy.log.bo;
 
-import cn.cy.log.OperationType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

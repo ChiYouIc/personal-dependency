@@ -1,6 +1,6 @@
 package cn.cy.log;
 
-import cn.cy.log.OperationType;
+import cn.cy.log.bo.OperationType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

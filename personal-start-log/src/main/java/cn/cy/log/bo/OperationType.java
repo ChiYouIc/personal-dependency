@@ -1,4 +1,4 @@
-package cn.cy.log;
+package cn.cy.log.bo;
 
 /**
  * @author: 开水白菜
