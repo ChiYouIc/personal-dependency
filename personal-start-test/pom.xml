@@ -53,6 +53,11 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>cn.cy</groupId>
+            <artifactId>personal-start-sync</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!--分别设置开发，测试，生产环境-->

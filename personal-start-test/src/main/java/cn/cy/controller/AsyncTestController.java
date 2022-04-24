@@ -18,17 +18,17 @@ import java.util.TimerTask;
 @RequestMapping("/async")
 public class AsyncTestController {
 
-	@GetMapping("/test")
-	public void test() {
-		AsyncExecutor me = AsyncExecutor.me();
-		me.execute(new TimerTask() {
-			@Override
-			public void run() {
-				log.info("start do some thing...");
+    @GetMapping("/test")
+    public void test() {
+        AsyncExecutor me = AsyncExecutor.me();
+        me.execute(new TimerTask() {
+            @Override
+            public void run() {
+                log.info("start do some thing...");
 
-				log.info("end do some thing...");
-			}
-		});
-	}
+                log.info("end do some thing...");
+            }
+        });
+    }
 
 }

@@ -1,6 +1,7 @@
 package cn.cy.common.util;
 
 import cn.hutool.core.text.StrFormatter;
+import cn.hutool.core.util.ArrayUtil;
 
 import java.util.*;
 
@@ -388,6 +389,39 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             result.append(camel.substring(1).toLowerCase());
         }
         return result.toString();
+    }
+
+    /**
+     * 字符串 str 是否与 testStrList 列表中的字符串匹配
+     *
+     * @param str         字符串
+     * @param testStrList 字符串列表
+     * @return 结果
+     */
+    public static boolean containsIgnoreCase(CharSequence str, Collection<? extends CharSequence> testStrList) {
+        return null != getContainsStrIgnoreCase(str, testStrList);
+    }
+
+    /**
+     * 使用 str 与 testStrList 列表中的字符串进行匹配，返回列表中第一个匹配的字串，如果没有可匹配项则返回 null
+     *
+     * @param str         字符串
+     * @param testStrList 字符串列表
+     * @return 匹配的字符串
+     */
+    public static String getContainsStrIgnoreCase(CharSequence str, Collection<? extends CharSequence> testStrList) {
+        if (isEmpty(str) || ArrayUtil.isEmpty(testStrList)) {
+            return null;
+        }
+        CharSequence[] var2 = testStrList.toArray(new CharSequence[0]);
+        int var3 = testStrList.size();
+        for (int var4 = 0; var4 < var3; ++var4) {
+            CharSequence testStr = var2[var4];
+            if (containsIgnoreCase(str, testStr)) {
+                return testStr.toString();
+            }
+        }
+        return null;
     }
 
     /**
