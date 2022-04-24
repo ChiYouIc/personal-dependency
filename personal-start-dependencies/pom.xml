@@ -48,8 +48,9 @@
         <java-jwt.version>3.2.0</java-jwt.version>
         <jjwt.version>0.9.1</jjwt.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <hutool.version>5.4.0</hutool.version>
+        <hutool.version>5.5.1</hutool.version>
         <lombok.version>1.18.12</lombok.version>
+        <guava.version>31.0.1-jre</guava.version>
     </properties>
 
     <dependencies>
@@ -146,6 +147,13 @@
                 <version>${personal-start.version}</version>
             </dependency>
 
+            <!-- 动态线程池模块 -->
+            <dependency>
+                <groupId>cn.cy</groupId>
+                <artifactId>personal-start-dtc</artifactId>
+                <version>${personal-start.version}</version>
+            </dependency>
+
 
             <!--SpringData工具包-->
             <dependency>
@@ -224,11 +232,23 @@
                 <version>${hutool.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
             <!-- lombok 工具包 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

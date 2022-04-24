@@ -23,6 +23,7 @@
         <module>personal-start-sso</module>
         <module>personal-start-websocket</module>
         <module>personal-start-validator</module>
+        <module>personal-start-dtc</module>
     </modules>
 
 </project>
