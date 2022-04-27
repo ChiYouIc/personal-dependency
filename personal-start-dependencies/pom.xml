@@ -147,14 +147,6 @@
                 <version>${personal-start.version}</version>
             </dependency>
 
-            <!-- 动态线程池模块 -->
-            <dependency>
-                <groupId>cn.cy</groupId>
-                <artifactId>personal-start-dtc</artifactId>
-                <version>${personal-start.version}</version>
-            </dependency>
-
-
             <!--SpringData工具包-->
             <dependency>
                 <groupId>org.springframework.data</groupId>
