@@ -53,7 +53,9 @@ public class SsoCoreConfig implements WebMvcConfigurer {
     public RestTemplate restTemplate() {
         RestTemplate template = new RestTemplateBuilder()
                 .rootUri(properties.getUrl())
+                .defaultHeader("appCode", properties.getAppCode())
                 .build();
+
         // 自定义的错误处理器
         template.setErrorHandler(new RestResponseErrorHandler());
         return template;

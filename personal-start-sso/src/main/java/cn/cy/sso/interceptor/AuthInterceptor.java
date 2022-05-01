@@ -5,8 +5,8 @@ import cn.cy.sso.config.properties.SsoProperties;
 import cn.cy.sso.model.SsoResult;
 import cn.cy.sso.utils.CoreUtil;
 import cn.cy.sso.utils.SsoUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.hutool.core.text.StrFormatter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +23,27 @@ import java.util.function.BiFunction;
  * @Date: 2021/1/7 21:41
  * @Description: 拦截器
  */
+@Slf4j
 public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
     private final BiFunction<HttpServletRequest, HttpServletResponse, Boolean> handler;
 
     private final RestTemplate restTemplate;
 
+    private final String appCode;
+
     public AuthInterceptor(SsoProperties ssoProperties, RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.handler = ssoProperties.getType() == ServerType.CLIENT ? this::isClient : this::isServer;
-        logger.info("The current service is Sso {}.", ssoProperties.getType().name());
+
+        if (ssoProperties.getType() == ServerType.CLIENT) {
+            this.handler = this::isClient;
+            this.appCode = ssoProperties.getAppCode();
+        } else {
+            this.handler = this::isServer;
+            this.appCode = null;
+        }
+
+        log.info("The current service is Sso {}.", ssoProperties.getType().name());
     }
 
     /**
@@ -98,25 +107,25 @@ public class AuthInterceptor implements HandlerInterceptor, PriorityOrdered {
      */
     private boolean sendToSsoServer(String token) {
         // token 验证地址
-        final String uri = "/auth?token=" + token;
+        final String uri = StrFormatter.format("/auth?token={}", token);
 
         ResponseEntity<SsoResult> responseEntity = restTemplate.getForEntity(uri, SsoResult.class);
         HttpStatus statusCode = responseEntity.getStatusCode();
 
         // 重定向
         if (statusCode == HttpStatus.PERMANENT_REDIRECT) {
-            logger.warn("sso server response permanent redirect ...");
+            log.warn("sso server response permanent redirect ...");
         } else if (statusCode.value() < HttpStatus.OK.value() || statusCode.value() >= HttpStatus.MULTIPLE_CHOICES.value()) {
-            logger.error("sso server source rejected access ...");
+            log.error("sso server source rejected access ...");
         }
         SsoResult body = responseEntity.getBody();
         if (body != null && body.isSuccess()) {
-            logger.info("sso server verify success ...");
+            log.info("sso server verify success ...");
             SsoUtil.setInfo(body.getUserInfo());
             return true;
         }
 
-        logger.error("sso server verify fail ...");
+        log.error("sso server verify fail ...");
         return false;
     }
 

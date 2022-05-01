@@ -14,6 +14,11 @@
       "name": "sso-core.url",
       "type": "java.lang.String",
       "description": "Description for sso-core.url."
+    },
+    {
+      "name": "sso-core.app-code",
+      "type": "java.lang.String",
+      "description": "应用在SSO服务端注册的应用码."
     }
   ]
 }
