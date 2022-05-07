@@ -24,13 +24,13 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <!--    &lt;!&ndash; 引入springBoot 父依赖 &ndash;&gt;-->
-    <!--    <parent>-->
-    <!--        <artifactId>spring-boot-parent</artifactId>-->
-    <!--        <groupId>org.springframework.boot</groupId>-->
-    <!--        <version>2.5.12</version>-->
-    <!--        <relativePath/>-->
-    <!--    </parent>-->
+    <!-- 引入springBoot 父依赖 -->
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>2.5.13</version>
+        <relativePath/>
+    </parent>
 
     <properties>
         <utf8>UTF-8</utf8>
@@ -80,14 +80,6 @@
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-parent</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
             <!-- WebSocket 模块 -->
             <dependency>
