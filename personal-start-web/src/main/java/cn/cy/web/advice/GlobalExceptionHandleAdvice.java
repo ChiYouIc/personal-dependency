@@ -34,6 +34,17 @@ public class GlobalExceptionHandleAdvice extends AbstractExceptionHandleAdvice i
     }
 
     @ExceptionHandler(Exception.class)
+    public ResponseEntity<FailedResponse> handleHttpClientErrorException(HttpServletRequest request, Exception e) {
+        FailedResponse response = FailedResponse.builder()
+                .code(HttpStatus.UNAUTHORIZED.value())
+                .msg(e.getMessage())
+                .exception(ExceptionUtil.stacktraceToString(e))
+                .build();
+        log.error(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<FailedResponse> handle(HttpServletRequest request, Exception e) {
         FailedResponse response = FailedResponse.builder()
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
