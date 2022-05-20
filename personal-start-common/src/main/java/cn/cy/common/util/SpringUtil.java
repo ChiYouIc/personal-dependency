@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
  * @Date: 2020/11/27 21:37
  * @Description: Spring 工具类
  */
-@Component
 public final class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
 	/**
 	 * Spring应用上下文环境
