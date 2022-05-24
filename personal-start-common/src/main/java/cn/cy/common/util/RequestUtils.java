@@ -17,6 +17,16 @@ import java.io.IOException;
  * @author 友叔
  */
 public class RequestUtils {
+
+    /**
+     * 获取请求路径
+     *
+     * @return 请求路径
+     */
+    public static String getPath() {
+        return getRequest().getRequestURI();
+    }
+
     /**
      * 获取String参数
      */
