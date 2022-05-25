@@ -1,10 +1,7 @@
-package cn.cy.limit;
+package cn.cy.limit.rate;
 
 import cn.cy.common.util.RequestUtils;
 import cn.cy.common.util.ip.IpUtils;
-import cn.cy.limit.annotation.LimitType;
-import cn.cy.limit.annotation.RateLimiter;
-import cn.cy.limit.exception.RateLimiterException;
 import cn.cy.redis.service.IRedisScriptService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -86,7 +83,7 @@ public class RateLimiterAspect {
      */
     public RedisScript<Long> limitScript() {
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
-        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/limit.lua")));
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/rate_limit.lua")));
         redisScript.setResultType(Long.class);
         return redisScript;
     }

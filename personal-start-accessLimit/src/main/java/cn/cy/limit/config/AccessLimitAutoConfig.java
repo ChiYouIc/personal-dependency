@@ -1,8 +1,8 @@
 package cn.cy.limit.config;
 
-import cn.cy.limit.IAccessLimitService;
-import cn.cy.limit.IdempotentLimiterAspect;
-import cn.cy.limit.RateLimiterAspect;
+import cn.cy.limit.idemp.IdempotentLimiterAspect;
+import cn.cy.limit.idemp.service.IIdempotentLimitService;
+import cn.cy.limit.rate.RateLimiterAspect;
 import cn.cy.redis.service.IRedisScriptService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +33,12 @@ public class AccessLimitAutoConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public IdempotentLimiterAspect idempotentLimiterAspect(@Autowired(required = false) IAccessLimitService<?> accessLimitService) {
-        if (accessLimitService == null) {
-            log.warn("No implementation class for " + IAccessLimitService.class.getName() + " was found");
+    public IdempotentLimiterAspect idempotentLimiterAspect(@Autowired(required = false) IIdempotentLimitService<?> limitService) {
+        if (limitService == null) {
+            log.warn("No implementation class for " + IIdempotentLimitService.class.getName() + " was found");
             return null;
         }
-        return new IdempotentLimiterAspect(accessLimitService);
+        return new IdempotentLimiterAspect(limitService);
     }
 
 }

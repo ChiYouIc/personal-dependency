@@ -1,5 +1,7 @@
-package cn.cy.limit.exception;
+package cn.cy.limit;
 
+import cn.cy.limit.idemp.IdempotentLimiterException;
+import cn.cy.limit.rate.RateLimiterException;
 import cn.cy.web.exception.AbstractExceptionHandleAdvice;
 import cn.cy.web.response.FailedResponse;
 import cn.hutool.core.exceptions.ExceptionUtil;

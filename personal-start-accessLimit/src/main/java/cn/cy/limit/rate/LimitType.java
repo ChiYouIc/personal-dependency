@@ -1,4 +1,4 @@
-package cn.cy.limit.annotation;
+package cn.cy.limit.rate;
 
 /**
  * @Author: 友

@@ -1,4 +1,4 @@
-package cn.cy.limit.exception;
+package cn.cy.limit.idemp;
 
 /**
  * @Author: 友
