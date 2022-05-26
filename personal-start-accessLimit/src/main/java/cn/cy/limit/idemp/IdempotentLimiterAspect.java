@@ -22,7 +22,7 @@ public class IdempotentLimiterAspect {
 
     private final IIdempotentLimitService<?> limitService;
 
-    public IdempotentLimiterAspect(final IIdempotentLimitService<?> limitService) {
+    public IdempotentLimiterAspect(IIdempotentLimitService<?> limitService) {
         this.limitService = limitService;
     }
 
@@ -37,19 +37,19 @@ public class IdempotentLimiterAspect {
         try {
             if (limitService.containKey(this.getCombineKey(point, limiter), limiter.time())) {
                 log.error("The path '{}' access frequency is too high", path);
-                throw new IdempotentLimiterException("The access frequency of interface " + path + " is too high.");
+                throw new IdempotentLimiterException("The access frequency of interface " + path + " is too high");
             }
         } catch (IdempotentLimiterException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Idempotent limiter handler exception.");
+            throw new RuntimeException("Idempotent limiter handler exception");
         }
 
     }
 
     @After(value = "@annotation(limiter)")
     public void after(JoinPoint point, IdempotentLimiter limiter) {
-        this.limitService.removePath(this.getCombineKey(point, limiter));
+        this.limitService.removeKey(this.getCombineKey(point, limiter));
     }
 
     /**

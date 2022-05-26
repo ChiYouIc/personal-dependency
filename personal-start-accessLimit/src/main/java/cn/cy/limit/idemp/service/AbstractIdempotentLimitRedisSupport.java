@@ -32,7 +32,7 @@ public abstract class AbstractIdempotentLimitRedisSupport<T> implements IIdempot
     }
 
     @Override
-    public void removePath(String key) {
+    public void removeKey(String key) {
         redisService.del(key);
     }
 

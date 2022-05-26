@@ -30,7 +30,7 @@ public abstract class AbstractIdempotentLimitSupport<T> implements IIdempotentLi
     }
 
     @Override
-    public void removePath(String key) {
+    public void removeKey(String key) {
         cacheKey.remove(key);
     }
 

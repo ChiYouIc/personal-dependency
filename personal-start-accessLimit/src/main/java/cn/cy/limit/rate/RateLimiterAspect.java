@@ -26,14 +26,17 @@ import java.util.List;
 @Aspect
 public class RateLimiterAspect {
 
-
     private final RedisScript<Long> limitScript;
 
     private final IRedisScriptService redisScriptService;
 
-    public RateLimiterAspect(IRedisScriptService redisScriptService) {
+    public RateLimiterAspect(IRedisScriptService redisScriptService) throws ClassNotFoundException {
+        if (redisScriptService == null) {
+            throw new ClassNotFoundException("No implementation class for " + IRedisScriptService.class.getName() + " was found");
+        }
         this.redisScriptService = redisScriptService;
         this.limitScript = limitScript();
+        log.info("Enable rate limit");
     }
 
     @Before(value = "@annotation(rateLimiter)")
@@ -47,13 +50,13 @@ public class RateLimiterAspect {
         try {
             Long number = redisScriptService.execute(limitScript, keys, count, time);
             if (number == null || number.intValue() > count) {
-                throw new RateLimiterException("Too many accesses, Please try again later.");
+                throw new RateLimiterException("Too many accesses, Please try again later");
             }
             log.info("Limit the request '{}', Current request'{}', Cache key'{}'", count, number.intValue(), key);
         } catch (RateLimiterException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Rate limiter handler exception.");
+            throw new RuntimeException("Rate limiter handler exception");
         }
     }
 

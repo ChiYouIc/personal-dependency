@@ -37,5 +37,5 @@ public interface IIdempotentLimitService<T> {
      *
      * @param key key
      */
-    public void removePath(String key);
+    public void removeKey(String key);
 }
