@@ -1,6 +1,10 @@
 package cn.cy.config;
 
+import cn.cy.limit.idemp.service.AbstractIdempotentLimitRedisSupport;
+import cn.cy.limit.idemp.service.AbstractIdempotentLimitSupport;
+import cn.cy.limit.idemp.service.IIdempotentLimitService;
 import cn.cy.redis.service.IRedisService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,4 +24,24 @@ public class AutoConfig {
 
     @Resource
     private IRedisService redisService;
+
+//    @Bean
+//    public IIdempotentLimitService<String> accessLimitService() {
+//        return new AbstractIdempotentLimitSupport<String>() {
+//            @Override
+//            public String connectionSign() {
+//                return "11111";
+//            }
+//        };
+//    }
+
+    @Bean
+    public IIdempotentLimitService<String> idempotentLimitService() {
+        return new AbstractIdempotentLimitRedisSupport<String>() {
+            @Override
+            public String connectionSign() {
+                return "11111";
+            }
+        };
+    }
 }
