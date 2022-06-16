@@ -1,9 +1,12 @@
 package cn.cy.sso.config;
 
+import cn.cy.sso.SsoCoreService;
 import cn.cy.sso.config.properties.SsoProperties;
 import cn.cy.sso.interceptor.AuthInterceptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.annotation.Resource;
 
@@ -59,5 +63,14 @@ public class SsoCoreConfig implements WebMvcConfigurer {
         // 自定义的错误处理器
         template.setErrorHandler(new RestResponseErrorHandler());
         return template;
+    }
+
+    /**
+     * Sso 客户端的 request url 扫描器
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "sso-core", name = "type", havingValue = "client")
+    public RequestPathCollector requestPathCollector(@Autowired RequestMappingHandlerMapping mappingHandlerMapping, @Autowired SsoCoreService ssoCoreService) {
+        return new RequestPathCollector(mappingHandlerMapping, ssoCoreService);
     }
 }
