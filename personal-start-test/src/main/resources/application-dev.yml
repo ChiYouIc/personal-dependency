@@ -42,3 +42,7 @@ source:
       - /sys/register
       - /minio/upload
       - /captchaImage
+
+
+#sso-core:
+#  type: client

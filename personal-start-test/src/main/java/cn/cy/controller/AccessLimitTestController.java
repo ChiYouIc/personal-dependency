@@ -4,6 +4,7 @@ import cn.cy.limit.idemp.IdempotentLimiter;
 import cn.cy.limit.rate.LimitType;
 import cn.cy.limit.rate.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,34 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("limit")
 public class AccessLimitTestController {
 
-
     @IdempotentLimiter(time = 10)
-    @RequestMapping("/idem")
+    @GetMapping("/idem")
     public void idempotentLimitTest() throws InterruptedException {
         Thread.sleep(12000);
         log.info("ssssssssssss");
     }
 
     @IdempotentLimiter
-    @RequestMapping("/idem1")
+    @GetMapping("/idem1")
     public void idempotentLimitTest_1() throws Exception {
         throw new Exception("ssss");
     }
 
-    @RequestMapping("/idem2")
+    @GetMapping("/idem2")
     public void idempotentLimitTest_2() throws Exception {
         throw new Exception("ssss");
     }
 
     @IdempotentLimiter(enable = false)
-    @RequestMapping("/idem3")
+    @GetMapping("/idem3")
     public void idempotentLimitTest_3() throws InterruptedException {
         Thread.sleep(12000);
         log.info("ssssssssssss");
     }
 
     @RateLimiter(time = 5, count = 1, limitType = LimitType.IP)
-    @RequestMapping("/rate")
+    @GetMapping("/rate")
     public void rateLimitTest() {
         log.info("ssssss");
     }

@@ -29,10 +29,10 @@
             <artifactId>personal-start-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>cn.cy</groupId>
-            <artifactId>personal-start-websocket</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.cy</groupId>-->
+<!--            <artifactId>personal-start-websocket</artifactId>-->
+<!--        </dependency>-->
 
         <!-- 测试依赖 -->
         <dependency>

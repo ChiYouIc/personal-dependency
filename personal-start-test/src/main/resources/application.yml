@@ -70,8 +70,19 @@ jwt:
   # JWT 刷新时间间隔（60 * 30）
   tokenRefreshInterval: 1800
 
+# 日志配置相关
+# debug: true # 调试模式
+# trace: true # 跟踪模式
+
 logging:
+  # 配置打印sql到控制台
   level:
-    #   配置打印sql到控制台
-    root: info
-    cn.cy: debug
+    root: info       # 指定整个项目的日志级别
+#    cn.cy: debug     # 指定类或者包层面的日志输出级别
+#    test: error
+#    config: info
+  group: # 指定组的日志级别
+    test: "cn.cy.controller.AsyncTestController,cn.cy.controller.AccessLimitTestController"
+    config: "cn.cy.config.AutoConfig"
+  file:
+    name: "spring-boot.log"
